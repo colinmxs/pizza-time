@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace PizzaTime
 {
@@ -29,6 +30,11 @@ namespace PizzaTime
         {
             if (env.IsDevelopment())
             {
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                  HotModuleReplacement = true,
+                  HotModuleReplacementClientOptions = new Dictionary<string, string> { { "reload", "true" } }
+                });
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
