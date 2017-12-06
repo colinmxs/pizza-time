@@ -1,16 +1,24 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <grid>
+      <div class="col-9-12">
+        <point-of-sale></point-of-sale>               
+      </div>
+      <div class="col-3-12">
+      </div>
+    </grid>
   </div>
 </template>
 
 <script>
+import POS from './POS/POS';
+import Grid from './Grid';
+
 export default {
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Pizza Time!'
-    }
+  components: {
+    'point-of-sale':POS,
+    'grid':Grid
   }
 }
 </script>
