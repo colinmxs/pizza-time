@@ -42,13 +42,7 @@ export default {
 [class*='col-'] {
 	float: left;
   	min-height: 1px;
-	padding-right: 20px; /* column-space */
 }
-
-[class*='col-'] [class*='col-']:last-child {
-	padding-right: 0;
-}
-
 .grid {
 	width: 100%;
 	max-width: 1140px;

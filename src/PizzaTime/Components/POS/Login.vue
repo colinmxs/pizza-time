@@ -1,17 +1,29 @@
 <template>
   <div id="login">
-      LOGIN
+    {{employeeNumber}}
+      Enter your employee number:<blinking-cursor :thingy="employeeNumber"></blinking-cursor>
   </div>
 </template>
 
 <script>
-export default {
-  
+  import Cursor from './Cursor';
+  export default {
+    data() {
+      return {
+        employeeNumber: ''
+      }
+    },
+    components:
+    {
+      'blinking-cursor': Cursor
+    },
+    mounted() {
+    }
 }
 </script>
 
 <style lang="scss">
-#login {
-    
-}
+  #login input {
+   
+  }
 </style>
