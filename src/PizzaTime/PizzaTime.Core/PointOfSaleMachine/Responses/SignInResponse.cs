@@ -2,11 +2,11 @@
 {
     public class SignInResponse
     {
-        private bool v;
+        public bool Success { get; }
 
-        public SignInResponse(bool v)
+        public SignInResponse(bool success)
         {
-            this.v = v;
+            Success = success;
         }
     }
 }

@@ -1,15 +1,21 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine.Responses
 {
+    using PizzaTime.Core.PointOfSaleMachine.Printer;
+    using PizzaTime.Core.PointOfSaleMachine.Order;
+    using System.Collections.Generic;
+    using PizzaTime.Core.PointOfSaleMachine.CashRegister.CashDrawer;
+
     public class PlaceOrderResponse
     {
-        private bool result;
+        public bool Success { get; }
 
         public PlaceOrderResponse(bool result)
         {
-            this.result = result;
+            Success = result;
         }
 
-        public Ticket Ticket { get; set; }
-        internal Order Order { get; set; }
+        public IEnumerable<Ticket> Tickets { get; internal set; }
+        public ICashDrawer CashDrawer { get; internal set; }
+        public Order Order { get; internal set; }
     }
 }

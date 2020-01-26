@@ -1,7 +1,9 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine.Printer
 {
+    using PizzaTime.Core.PointOfSaleMachine.Order;
+
     public interface IPrinter
     {
-        ITicket PrintTicket(Order order);
+        Ticket[] PrintTickets(Order order);
     }
 }

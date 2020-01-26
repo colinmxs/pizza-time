@@ -2,6 +2,6 @@
 {
     public class SignInRequest
     {
-        public string Passcode { get; internal set; }
+        public string Passcode { get; set; }
     }
 }

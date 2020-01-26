@@ -2,5 +2,6 @@
 {
     public class EjectCashDrawerRequest
     {
+        public string Passcode { get; set; }
     }
 }

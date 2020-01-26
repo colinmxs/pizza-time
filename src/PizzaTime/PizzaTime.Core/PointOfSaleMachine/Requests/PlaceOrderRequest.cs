@@ -1,7 +1,9 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine.Requests
 {
+    using PizzaTime.Core.PointOfSaleMachine.Order;
+
     public class PlaceOrderRequest
     {
-        internal Order Order { get; set; }
+        public Order Order { get; set; }
     }
 }

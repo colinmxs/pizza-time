@@ -1,14 +1,16 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine.Responses
 {
+    using PizzaTime.Core.PointOfSaleMachine.Customer;
+
     public class AddOrUpdateCustomerResponse
     {
-        private bool v;
+        public bool Success { get; }
 
-        public AddOrUpdateCustomerResponse(bool v)
+        public AddOrUpdateCustomerResponse(bool success)
         {
-            this.v = v;
+            this.Success = success;
         }
 
-        internal Customer Customer { get; set; }
+        public Customer Customer { get; internal set; }
     }
 }

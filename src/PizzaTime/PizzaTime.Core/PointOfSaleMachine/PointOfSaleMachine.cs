@@ -1,8 +1,9 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine
 {
     using PizzaTime.Core.PointOfSaleMachine.CashRegister;
-    using PizzaTime.Core.PointOfSaleMachine.CustomerRepository;
-    using PizzaTime.Core.PointOfSaleMachine.OrderRepository;
+    using PizzaTime.Core.PointOfSaleMachine.CashRegister.CashDrawer;
+    using PizzaTime.Core.PointOfSaleMachine.Customer;
+    using PizzaTime.Core.PointOfSaleMachine.Order;
     using PizzaTime.Core.PointOfSaleMachine.Printer;
     using PizzaTime.Core.PointOfSaleMachine.Requests;
     using PizzaTime.Core.PointOfSaleMachine.Responses;
@@ -17,7 +18,7 @@
         private readonly IOrderRepository _orderRepository;
         private readonly IPrinter _printer;
 
-        protected PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
+        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
         {
             _cashRegister = cashRegister;
             _customerRepository = customerRepository;
@@ -27,30 +28,49 @@
 
         public AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest)
         {
-            Customer customer = _customerRepository.GetByPhoneNumber(addCustomerRequest.LookupPhoneNumber);
-            if(customer == null)
+            bool success = false;
+
+            if (!string.IsNullOrEmpty(addCustomerRequest.Customer.PhoneNumber)
+                && !string.IsNullOrEmpty(addCustomerRequest.Customer.FirstName)
+                && !string.IsNullOrEmpty(addCustomerRequest.Customer.LastName))
             {
+                var customer = _customerRepository.GetById(addCustomerRequest.Customer.Id);
+                if (customer != null)
+                {
+                    _customerRepository.Remove(customer);
+                }
+
                 _customerRepository.Add(addCustomerRequest.Customer);
+
+                success = true;
             }
 
-            return new AddOrUpdateCustomerResponse(true)
+            return new AddOrUpdateCustomerResponse(success)
             {
-                Customer = customer
+                Customer = addCustomerRequest.Customer
             };
         }
 
         public EjectCashDrawerResponse EjectCashDrawer(EjectCashDrawerRequest ejectCashRegisterRequest)
         {
-            CashDrawer cashDrawer = _cashRegister.EjectCashDrawer();
-            return new EjectCashDrawerResponse(true)
+            
+            if(ejectCashRegisterRequest.Passcode == _passcode)
             {
-                CashDrawer = cashDrawer
-            };
+                ICashDrawer cashDrawer = _cashRegister.EjectCashDrawer();
+                return new EjectCashDrawerResponse(true)
+                {
+                    CashDrawer = cashDrawer
+                };
+            }
+            else
+            {
+                return new EjectCashDrawerResponse(false);
+            }
         }
 
         public LookupCustomerResponse LookupCustomer(LookupCustomerRequest lookupCustomerRequest)
         {
-            Customer customer = _customerRepository.GetByPhoneNumber(lookupCustomerRequest.PhoneNumber);
+            var customer = _customerRepository.GetByPhoneNumber(lookupCustomerRequest.PhoneNumber);
             return new LookupCustomerResponse(true)
             {
                 Customer = customer
@@ -59,14 +79,29 @@
 
         public PlaceOrderResponse PlaceOrder(PlaceOrderRequest placeOrderRequest)
         {
-            Order order = placeOrderRequest.Order;
-            bool result = _orderRepository.Add(order);
-            Ticket ticket = _printer.PrintTicket(placeOrderRequest.,placeOrderRequest.Order);
-            return new PlaceOrderResponse(result)
+            bool result;
+            
+            if((placeOrderRequest.Order.OrderType != OrderType.DineIn && placeOrderRequest.Order.Customer == null) 
+                || placeOrderRequest.Order.OrderItems == null)
             {
-                Order = order,
-                Ticket = ticket
+                result = false;
+            }
+            else
+            {
+                result = _orderRepository.Add(placeOrderRequest.Order);
+            }
+
+            var response = new PlaceOrderResponse(result) 
+            {
+                Order = placeOrderRequest.Order
             };
+            if (result)
+            {
+                response.CashDrawer = _cashRegister.EjectCashDrawer();
+                response.Tickets = _printer.PrintTickets(placeOrderRequest.Order);
+            }
+
+            return response;
         }
 
         public SignInResponse SignIn(SignInRequest signInRequest)

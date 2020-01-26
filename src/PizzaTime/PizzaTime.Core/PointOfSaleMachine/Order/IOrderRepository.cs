@@ -1,4 +1,4 @@
-﻿namespace PizzaTime.Core.PointOfSaleMachine.OrderRepository
+﻿namespace PizzaTime.Core.PointOfSaleMachine.Order
 {
     public interface IOrderRepository
     {

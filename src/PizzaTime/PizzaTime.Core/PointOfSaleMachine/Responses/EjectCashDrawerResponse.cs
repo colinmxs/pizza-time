@@ -1,14 +1,15 @@
-﻿namespace PizzaTime.Core.PointOfSaleMachine.Responses
+﻿using PizzaTime.Core.PointOfSaleMachine.CashRegister.CashDrawer;
+
+namespace PizzaTime.Core.PointOfSaleMachine.Responses
 {
     public class EjectCashDrawerResponse
     {
-        private bool success;
-
         public EjectCashDrawerResponse(bool success)
         {
-            this.success = success;
+            Success = success;
         }
 
-        public CashDrawer CashDrawer { get; internal set; }
+        public ICashDrawer CashDrawer { get; internal set; }
+        public bool Success { get; }
     }
 }

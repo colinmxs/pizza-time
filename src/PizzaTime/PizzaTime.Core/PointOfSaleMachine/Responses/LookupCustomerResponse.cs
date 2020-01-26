@@ -1,14 +1,16 @@
 ﻿namespace PizzaTime.Core.PointOfSaleMachine.Responses
 {
+    using PizzaTime.Core.PointOfSaleMachine.Customer;
+
     public class LookupCustomerResponse
     {
-        private bool v;
+        public bool Success { get; }
 
-        public LookupCustomerResponse(bool v)
+        public LookupCustomerResponse(bool success)
         {
-            this.v = v;
+            Success = success;
         }
 
-        internal Customer Customer { get; set; }
+        public Customer Customer { get; internal set; }
     }
 }
