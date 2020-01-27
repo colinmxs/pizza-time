@@ -1,10 +1,21 @@
 ﻿using PizzaTime.Core.PointOfSale.Requests;
 using PizzaTime.Core.PointOfSale.Responses;
+using System;
+using System.Diagnostics.Contracts;
 
 namespace PizzaTime.Core.PointOfSale
 {
     public class PointOfSaleMachine : IPointOfSaleMachine
     {
+        public enum Screen
+        {
+            SignIn = 0,
+            Menu = 1,
+            AddOrder = 2,
+            Orders = 3,
+            AddCustomer = 4,
+            Customers = 5
+        }
         private const string _passcode = "admin";
         private bool _signedIn = false;
 
@@ -13,12 +24,28 @@ namespace PizzaTime.Core.PointOfSale
         private readonly IOrderRepository _orderRepository;
         private readonly IPrinter _printer;
 
+        public Screen LastScreen { get; private set; }
+        private Screen _currentScreen;
+        public Screen CurrentScreen 
+        { 
+            get 
+            { 
+                return _currentScreen; 
+            } 
+            private set 
+            {
+                LastScreen = _currentScreen;
+                _currentScreen = value;
+            }
+        }
+
         public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
         {
             _cashRegister = cashRegister;
             _customerRepository = customerRepository;
             _orderRepository = orderRepository;
             _printer = printer;
+            CurrentScreen = Screen.SignIn;
         }
 
         public AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest)
@@ -74,6 +101,8 @@ namespace PizzaTime.Core.PointOfSale
 
         public PlaceOrderResponse PlaceOrder(PlaceOrderRequest placeOrderRequest)
         {
+            if (placeOrderRequest == null) throw new ArgumentNullException(nameof(placeOrderRequest));
+
             bool result;
 
             if ((placeOrderRequest.Order.Type != Order.OrderType.DineIn && placeOrderRequest.Order.Customer == null)
@@ -94,14 +123,17 @@ namespace PizzaTime.Core.PointOfSale
             {
                 response.CashDrawer = _cashRegister.EjectCashDrawer();
                 response.Tickets = _printer.PrintTickets(placeOrderRequest.Order);
-            }
+                CurrentScreen = Screen.Orders;
+            }            
 
             return response;
         }
 
         public SignInResponse SignIn(SignInRequest signInRequest)
         {
+            if (signInRequest == null) throw new ArgumentNullException(nameof(signInRequest));
             _signedIn = signInRequest.Passcode == _passcode;
+            if (_signedIn) CurrentScreen = Screen.Menu;
             return new SignInResponse(_signedIn);
         }
     }
