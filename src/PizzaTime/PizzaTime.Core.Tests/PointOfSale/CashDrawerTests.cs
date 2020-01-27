@@ -113,11 +113,10 @@
 
         [TestMethod]
         public void RemoveDollarBill_ReturnsRequestedDollarBill()
-        {
-            var bill = DollarBill.Ten;
-            cashDrawer.AddDollarBills(new List<DollarBill> { bill });
+        {            
+            cashDrawer.AddDollarBills(new List<DollarBill> { DollarBill.Ten });
             var result = cashDrawer.RemoveDollarBill(DollarBill.Ten);
-            result.ShouldBe(bill);
+            result.ShouldBe(DollarBill.Ten);
         }
     }
 }

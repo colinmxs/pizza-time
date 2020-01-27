@@ -87,9 +87,9 @@
             //arrange
             var order = new Order(OrderType.DineIn)
             {
-                OrderItems = new OrderItem[]
+                OrderItems = new IOrderItem[]
                 {
-                    new OrderItem()
+                    A.Fake<IOrderItem>()
                 }
             };
 
@@ -113,9 +113,9 @@
             //arrange
             var order = new Order(OrderType.DineIn)
             {
-                OrderItems = new OrderItem[]
+                OrderItems = new IOrderItem[]
                 {
-                    new OrderItem()
+                    A.Fake<IOrderItem>()
                 }
             };
 
@@ -139,9 +139,9 @@
             //arrange
             var order = new Order(OrderType.DineIn)
             {
-                OrderItems = new OrderItem[]
+                OrderItems = new IOrderItem[]
                 {
-                    new OrderItem()
+                    A.Fake<IOrderItem>()
                 }
             };
 
@@ -188,9 +188,9 @@
             //arrange
             var order = new Order(OrderType.Delivery)
             {
-                OrderItems = new OrderItem[]
+                OrderItems = new IOrderItem[]
                 {
-                    new OrderItem()
+                    A.Fake<IOrderItem>()
                 },
                 Customer = null
             };
@@ -215,9 +215,9 @@
             //arrange
             var order = new Order(OrderType.TakeOut)
             {
-                OrderItems = new OrderItem[]
+                OrderItems = new IOrderItem[]
                 {
-                    new OrderItem()
+                    A.Fake<IOrderItem>()
                 },
                 Customer = null
             };

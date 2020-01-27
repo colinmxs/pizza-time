@@ -65,12 +65,12 @@
 
             DollarBill bill = (DollarBill)obj;
             // compare elements here
-            return bill._id == _id;
+            return bill.Amount == Amount;
         }
 
         public override int GetHashCode()
         {
-            return _id.GetHashCode();
+            return Amount.GetHashCode();
         }
 
         public static bool operator ==(DollarBill left, DollarBill right)

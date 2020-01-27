@@ -1,6 +1,9 @@
-﻿namespace PizzaTime.Core.PointOfSale
+﻿using System.Collections.Generic;
+
+namespace PizzaTime.Core.PointOfSale
 {
-    public abstract class Ticket
+    public class Ticket
     {
+        public IEnumerable<IOrderItem> OrderItems { get; set; }
     }
 }

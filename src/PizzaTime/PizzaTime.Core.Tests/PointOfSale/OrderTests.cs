@@ -9,15 +9,17 @@
     using System.Linq;
 
     [TestClass]
-    public class DollarBillTests
+    public class OrderTests
     {
         [TestMethod]
-        public void Equals_Overrides()
+        public void Order()
         {
-            var bill = DollarBill.One;
-            var bill2 = DollarBill.One;
-            (bill == bill2).ShouldBeTrue();
-            (bill == bill).ShouldBeTrue();
+            var order = new Order(Core.PointOfSale.Order.OrderType.Delivery);
+            order.Type.ShouldBe(Core.PointOfSale.Order.OrderType.Delivery);
+
+            order.PaymentStatus.ShouldBe(false);
+            order.Pay();
+            order.PaymentStatus.ShouldBe(true);
         }
     }
 }

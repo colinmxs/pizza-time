@@ -1,5 +1,6 @@
 ﻿namespace PizzaTime.Core.PointOfSale
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -17,11 +18,21 @@
             Type = orderType;
         }
 
+        public int Id { get; internal set; }
         public OrderType Type { get; set; }
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public IEnumerable<IOrderItem> OrderItems { get; set; }
+        public bool PaymentStatus { get; private set; }
+
         public Customer Customer { get; set; }
         public decimal Subtotal => OrderItems.Sum(orderItem => orderItem.Price);
+
+        public void Pay()
+        {
+            PaymentStatus = true;
+        }
+
         public decimal Tax => 0.05M * Subtotal;
         public decimal Total => Subtotal + Tax;
+
     }
 }
