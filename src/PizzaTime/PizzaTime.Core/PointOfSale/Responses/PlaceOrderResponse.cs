@@ -1,5 +1,8 @@
 ﻿namespace PizzaTime.Core.PointOfSale.Responses
 {
+    using PizzaTime.Core.CashRegisters;
+    using PizzaTime.Core.Orders;
+    using PizzaTime.Core.Tickets;
     using System.Collections.Generic;
 
     public class PlaceOrderResponse

@@ -1,10 +1,15 @@
-﻿using PizzaTime.Core.PointOfSale.Requests;
-using PizzaTime.Core.PointOfSale.Responses;
-using System;
-using System.Diagnostics.Contracts;
-
-namespace PizzaTime.Core.PointOfSale
+﻿namespace PizzaTime.Core.PointOfSale
 {
+    using PizzaTime.Core.CashRegisters;
+    using PizzaTime.Core.Customers;
+    using PizzaTime.Core.Orders;
+    using PizzaTime.Core.PointOfSale.Interfaces;
+    using PizzaTime.Core.PointOfSale.Requests;
+    using PizzaTime.Core.PointOfSale.Responses;
+    using PizzaTime.Core.Printers;
+    using System;
+    using System.Collections.Generic;
+
     public class PointOfSaleMachine : IPointOfSaleMachine
     {
         public enum Screen
@@ -16,36 +21,42 @@ namespace PizzaTime.Core.PointOfSale
             AddCustomer = 4,
             Customers = 5
         }
+
         private const string _passcode = "admin";
         private bool _signedIn = false;
+        private Dictionary<Screen, IPointOfSaleView> _screens;
 
         private readonly ICashRegister _cashRegister;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IPrinter _printer;
 
-        public Screen LastScreen { get; private set; }
-        private Screen _currentScreen;
-        public Screen CurrentScreen 
-        { 
-            get 
-            { 
-                return _currentScreen; 
-            } 
-            private set 
-            {
-                LastScreen = _currentScreen;
-                _currentScreen = value;
-            }
-        }
-
-        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
+        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer, IEnumerable<IPointOfSaleView> views)
         {
             _cashRegister = cashRegister;
             _customerRepository = customerRepository;
             _orderRepository = orderRepository;
             _printer = printer;
-            CurrentScreen = Screen.SignIn;
+            if(views != null)
+            {
+                _screens = new Dictionary<Screen, IPointOfSaleView>();
+                foreach (var view in views)
+                {
+                    _screens[view.Screen] = view;
+                }
+                TryActivateScreen(Screen.SignIn);                
+            }            
+        }
+
+        private void TryActivateScreen(Screen screenToActivate)
+        {
+            if(_screens != null)
+            {
+                foreach (var value in _screens.Values) value.Active = false;
+                
+                var screen = _screens[screenToActivate];
+                if (screen != null) screen.Active = true;
+            }            
         }
 
         public AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest)
@@ -65,6 +76,8 @@ namespace PizzaTime.Core.PointOfSale
                 _customerRepository.Add(addCustomerRequest.Customer);
 
                 success = true;
+
+                TryActivateScreen(Screen.Customers);
             }
 
             return new AddOrUpdateCustomerResponse(success)
@@ -123,7 +136,7 @@ namespace PizzaTime.Core.PointOfSale
             {
                 response.CashDrawer = _cashRegister.EjectCashDrawer();
                 response.Tickets = _printer.PrintTickets(placeOrderRequest.Order);
-                CurrentScreen = Screen.Orders;
+                TryActivateScreen(Screen.Orders);
             }            
 
             return response;
@@ -133,7 +146,7 @@ namespace PizzaTime.Core.PointOfSale
         {
             if (signInRequest == null) throw new ArgumentNullException(nameof(signInRequest));
             _signedIn = signInRequest.Passcode == _passcode;
-            if (_signedIn) CurrentScreen = Screen.Menu;
+            if(_signedIn) TryActivateScreen(Screen.Menu);
             return new SignInResponse(_signedIn);
         }
     }

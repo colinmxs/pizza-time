@@ -1,4 +1,6 @@
-﻿namespace PizzaTime.Core.PointOfSale.Responses
+﻿using PizzaTime.Core.Customers;
+
+namespace PizzaTime.Core.PointOfSale.Responses
 {
     public class LookupCustomerResponse
     {

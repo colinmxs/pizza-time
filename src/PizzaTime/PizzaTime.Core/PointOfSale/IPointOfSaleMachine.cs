@@ -1,8 +1,8 @@
 ﻿namespace PizzaTime.Core.PointOfSale
 {
     using PizzaTime.Core.PointOfSale.Requests;
-    using PizzaTime.Core.PointOfSale.Responses;
-
+    using PizzaTime.Core.PointOfSale.Responses;   
+    
     public interface IPointOfSaleMachine
     {
         SignInResponse SignIn(SignInRequest signInRequest);

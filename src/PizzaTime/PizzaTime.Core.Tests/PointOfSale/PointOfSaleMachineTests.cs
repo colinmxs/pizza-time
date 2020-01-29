@@ -78,7 +78,7 @@
             var result = pointOfSaleMachine.SignIn(signInRequest);
 
             //assert
-            pointOfSaleMachine.CurrentScreen.ShouldBe(PointOfSaleMachine.Screen.Menu);
+            pointOfSaleMachine.CurrentScreen.ShouldBe(Screen.Menu);
         }
 
         [TestMethod]
@@ -144,7 +144,7 @@
             var result = pointOfSaleMachine.PlaceOrder(placeOrderRequest);
 
             //assert
-            pointOfSaleMachine.CurrentScreen.ShouldBe(PointOfSaleMachine.Screen.Orders);
+            pointOfSaleMachine.CurrentScreen.ShouldBe(Screen.Orders);
         }
 
         [TestMethod]
@@ -385,5 +385,11 @@
             result.Customer.ShouldBe(customer);
             A.CallTo(() => customerRepo.Remove(A<Customer>.That.Matches(c => c.Id == knownCustomer.Id))).MustHaveHappened();
         }
+
+        //[TestMethod]
+        //public void GetScreenList_ReturnsScreenNameAndEnum()
+        //{
+        //    var getScreens = pointOfSaleMachine.GetScreens();
+        //}
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace PizzaTime.Core.PointOfSale.Requests
+﻿using PizzaTime.Core.Customers;
+
+namespace PizzaTime.Core.PointOfSale.Requests
 {
     public class AddOrUpdateCustomerRequest
     {
