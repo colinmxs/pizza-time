@@ -149,5 +149,10 @@
             if(_signedIn) TryActivateScreen(Screen.Menu);
             return new SignInResponse(_signedIn);
         }
+
+        public void SignOut()
+        {
+            TryActivateScreen(Screen.SignIn);
+        }
     }
 }

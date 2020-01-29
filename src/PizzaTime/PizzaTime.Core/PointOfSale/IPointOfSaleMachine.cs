@@ -5,6 +5,7 @@
     
     public interface IPointOfSaleMachine
     {
+        void SignOut();
         SignInResponse SignIn(SignInRequest signInRequest);
         LookupCustomerResponse LookupCustomer(LookupCustomerRequest lookupCustomerRequest);
         AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest);

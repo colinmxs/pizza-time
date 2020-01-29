@@ -9,11 +9,14 @@ using PizzaTime.Core.Printers;
 using PizzaTime.Core.PaymentOptions;
 using PizzaTime.Core.PointOfSale.Requests;
 using PizzaTime.Core.PointOfSale.Responses;
+using UnityEngine.Events;
 
 public class PointOfSaleScreenController : MonoBehaviour
 {
-    public IPointOfSaleMachine pos;    
-    
+    public IPointOfSaleMachine pos;
+    public UnityEvent OnKeyboardClack;
+    IEnumerable<IPointOfSaleView> views;
+
     private void Awake()
     {
         var cashRegi = new CashRegister(new CashDrawer(new List<DollarBill> 
@@ -44,8 +47,19 @@ public class PointOfSaleScreenController : MonoBehaviour
             DollarBill.One,
             DollarBill.One
         }));
-        var views = GetComponentsInChildren<IPointOfSaleView>();
+        views = GetComponentsInChildren<IPointOfSaleView>();
         pos = new PointOfSaleMachine(cashRegi, new CustomerRepository(), new OrderRepository(), new Printer(), views);             
+    }
+
+    public void KeyboardClack()
+    {
+        Debug.Log("On Keyboard Clack");
+        OnKeyboardClack.Invoke();
+    }
+
+    public void SignOut()
+    {
+        pos.SignOut();
     }
 
     public void SignIn(string password)

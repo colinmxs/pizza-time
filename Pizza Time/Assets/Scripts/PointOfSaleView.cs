@@ -31,15 +31,15 @@ public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
 
     public void Start()
     {
-        if (canvasGroup.interactable && Active)
-        {
-            if (focusableButton != null) focusableButton.Select();
-            else if (focusableInput != null)
-            {
-                focusableInput.Select();
-                focusableInput.ActivateInputField();
-            }
-        }
+        //if (canvasGroup.interactable && Active)
+        //{
+        //    if (focusableButton != null) focusableButton.Select();
+        //    else if (focusableInput != null)
+        //    {
+        //        focusableInput.Select();
+        //        focusableInput.ActivateInputField();
+        //    }
+        //}
     }
 
     public void Update()
