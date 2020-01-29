@@ -3,60 +3,27 @@
     using PizzaTime.Core.CashRegisters;
     using PizzaTime.Core.Customers;
     using PizzaTime.Core.Orders;
-    using PizzaTime.Core.PointOfSale.Interfaces;
     using PizzaTime.Core.PointOfSale.Requests;
     using PizzaTime.Core.PointOfSale.Responses;
     using PizzaTime.Core.Printers;
     using System;
-    using System.Collections.Generic;
 
     public class PointOfSaleMachine : IPointOfSaleMachine
     {
-        public enum Screen
-        {
-            SignIn = 0,
-            Menu = 1,
-            AddOrder = 2,
-            Orders = 3,
-            AddCustomer = 4,
-            Customers = 5
-        }
-
         private const string _passcode = "admin";
         private bool _signedIn = false;
-        private Dictionary<Screen, IPointOfSaleView> _screens;
 
         private readonly ICashRegister _cashRegister;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IPrinter _printer;
 
-        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer, IEnumerable<IPointOfSaleView> views)
+        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
         {
             _cashRegister = cashRegister;
             _customerRepository = customerRepository;
             _orderRepository = orderRepository;
-            _printer = printer;
-            if(views != null)
-            {
-                _screens = new Dictionary<Screen, IPointOfSaleView>();
-                foreach (var view in views)
-                {
-                    _screens[view.Screen] = view;
-                }
-                TryActivateScreen(Screen.SignIn);                
-            }            
-        }
-
-        private void TryActivateScreen(Screen screenToActivate)
-        {
-            if(_screens != null)
-            {
-                foreach (var value in _screens.Values) value.Active = false;
-                
-                var screen = _screens[screenToActivate];
-                if (screen != null) screen.Active = true;
-            }            
+            _printer = printer;            
         }
 
         public AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest)
@@ -76,8 +43,6 @@
                 _customerRepository.Add(addCustomerRequest.Customer);
 
                 success = true;
-
-                TryActivateScreen(Screen.Customers);
             }
 
             return new AddOrUpdateCustomerResponse(success)
@@ -136,7 +101,6 @@
             {
                 response.CashDrawer = _cashRegister.EjectCashDrawer();
                 response.Tickets = _printer.PrintTickets(placeOrderRequest.Order);
-                TryActivateScreen(Screen.Orders);
             }            
 
             return response;
@@ -146,13 +110,12 @@
         {
             if (signInRequest == null) throw new ArgumentNullException(nameof(signInRequest));
             _signedIn = signInRequest.Passcode == _passcode;
-            if(_signedIn) TryActivateScreen(Screen.Menu);
             return new SignInResponse(_signedIn);
         }
 
         public void SignOut()
         {
-            TryActivateScreen(Screen.SignIn);
+            _signedIn = false;
         }
     }
 }

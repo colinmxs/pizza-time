@@ -1,16 +1,15 @@
-﻿using PizzaTime.Core.PointOfSale;
-using PizzaTime.Core.PointOfSale.Interfaces;
+﻿using PizzaTime.Core.PointOfSale.Interfaces;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using Screen = PizzaTime.Core.PointOfSale.Screen;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
 {
-    public InputField focusableInput;
-    public Button focusableButton;
-
-    public PointOfSaleMachine.Screen screen;
-    public PointOfSaleMachine.Screen Screen 
+    public UnityEvent OnActivate;
+    public Screen screen;
+    public Screen Screen 
     { 
         get 
         {
@@ -27,20 +26,7 @@ public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    public void Start()
-    {
-        //if (canvasGroup.interactable && Active)
-        //{
-        //    if (focusableButton != null) focusableButton.Select();
-        //    else if (focusableInput != null)
-        //    {
-        //        focusableInput.Select();
-        //        focusableInput.ActivateInputField();
-        //    }
-        //}
-    }
+    }   
 
     public void Update()
     {
@@ -48,13 +34,7 @@ public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
         {
             canvasGroup.interactable = true;
             canvasGroup.alpha = 1;
-
-            if (focusableButton != null) focusableButton.Select();
-            else if (focusableInput != null)
-            {
-                focusableInput.Select();                    
-                focusableInput.ActivateInputField();
-            }
+            OnActivate.Invoke();
         }
         else if(canvasGroup.interactable && !Active)
         {

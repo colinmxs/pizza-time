@@ -4,7 +4,7 @@
     using PizzaTime.Core.PointOfSale.Responses;   
     
     public interface IPointOfSaleMachine
-    {
+    {        
         void SignOut();
         SignInResponse SignIn(SignInRequest signInRequest);
         LookupCustomerResponse LookupCustomer(LookupCustomerRequest lookupCustomerRequest);

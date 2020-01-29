@@ -6,7 +6,7 @@ namespace PizzaTime.Core.Orders
     public class OrderRepository : IOrderRepository
     {
         List<Order> _orders = new List<Order>();
-        private int pageSize = 10;
+        private int pageSize = 100;
         
         public bool Add(Order order)
         {

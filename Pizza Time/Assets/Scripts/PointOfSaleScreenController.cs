@@ -8,8 +8,9 @@ using PizzaTime.Core.Orders;
 using PizzaTime.Core.Printers;
 using PizzaTime.Core.PaymentOptions;
 using PizzaTime.Core.PointOfSale.Requests;
-using PizzaTime.Core.PointOfSale.Responses;
 using UnityEngine.Events;
+using Screen = PizzaTime.Core.PointOfSale.Screen;
+using System.Linq;
 
 public class PointOfSaleScreenController : MonoBehaviour
 {
@@ -48,18 +49,39 @@ public class PointOfSaleScreenController : MonoBehaviour
             DollarBill.One
         }));
         views = GetComponentsInChildren<IPointOfSaleView>();
-        pos = new PointOfSaleMachine(cashRegi, new CustomerRepository(), new OrderRepository(), new Printer(), views);             
+        pos = new PointOfSaleMachine(cashRegi, new CustomerRepository(), new OrderRepository(), new Printer());
+        if (views != null)
+        {
+            TryActivateScreen(Screen.SignIn);
+        }
+    }
+
+    private void TryActivateScreen(Screen screenToActivate)
+    {
+        if (views != null)
+        {
+            foreach (var view in views) view.Active = false;
+
+            var screen = views.SingleOrDefault(v => v.Screen == screenToActivate);
+            if (screen != null) screen.Active = true;
+        }
     }
 
     public void KeyboardClack()
     {
-        Debug.Log("On Keyboard Clack");
         OnKeyboardClack.Invoke();
+    }
+
+    public void SelectMenuOption(string option)
+    {
+        var screen = views.SingleOrDefault(v => v.Screen.ToString() == option);
+        if (screen != null) TryActivateScreen(screen.Screen);
     }
 
     public void SignOut()
     {
         pos.SignOut();
+        TryActivateScreen(Screen.SignIn);
     }
 
     public void SignIn(string password)
@@ -69,5 +91,6 @@ public class PointOfSaleScreenController : MonoBehaviour
             Passcode = password
         };
         var result = pos.SignIn(request);
+        if (result.Success) TryActivateScreen(Screen.Menu);
     }
 }

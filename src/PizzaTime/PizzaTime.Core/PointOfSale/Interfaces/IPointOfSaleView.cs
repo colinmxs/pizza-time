@@ -2,7 +2,7 @@
 {
     public interface IPointOfSaleView
     {
-        PointOfSaleMachine.Screen Screen { get; }
+        Screen Screen { get; }
         bool Active { get; set; }
     }
 }
