@@ -11,5 +11,6 @@
         AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest);
         PlaceOrderResponse PlaceOrder(PlaceOrderRequest placeOrderRequest);
         EjectCashDrawerResponse EjectCashDrawer(EjectCashDrawerRequest ejectCashRegisterRequest);
+        GetOrdersResponse GetOrders(GetOrdersRequest getOrdersRequest);
     }
 }

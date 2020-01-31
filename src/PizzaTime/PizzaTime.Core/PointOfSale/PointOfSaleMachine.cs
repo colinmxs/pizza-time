@@ -117,5 +117,15 @@
         {
             _signedIn = false;
         }
+
+        public GetOrdersResponse GetOrders(GetOrdersRequest getOrdersRequest)
+        {
+            if (getOrdersRequest == null) throw new ArgumentNullException(nameof(getOrdersRequest));
+            var orders = _orderRepository.GetOrders(getOrdersRequest.Page);
+            return new GetOrdersResponse
+            {
+                Orders = orders
+            };
+        }
     }
 }

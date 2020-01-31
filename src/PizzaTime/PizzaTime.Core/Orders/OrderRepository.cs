@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PizzaTime.Core.Orders
 {
     public class OrderRepository : IOrderRepository
     {
-        List<Order> _orders = new List<Order>();
+        public Guid Id = Guid.NewGuid();
+        public List<Order> _orders = new List<Order>();
+        private int orderCounter = 0;
         private int pageSize = 100;
         
         public bool Add(Order order)
         {
-            var id = _orders.Count;
-            order.Id = id;
-            _orders.Add(order);
+            lock (_orders)
+            {
+                var id = orderCounter++;
+                order.Id = id + 1000000;
+                _orders.Add(order);
+            }
             return true;
         }
 
         public IEnumerable<Order> GetOrders(int page)
         {
-            var desc = _orders.OrderByDescending(order => order.Id);
+            var desc = _orders.OrderByDescending(order => order. Id);
             return desc.Skip(pageSize * page).Take(pageSize);
         }
     }
