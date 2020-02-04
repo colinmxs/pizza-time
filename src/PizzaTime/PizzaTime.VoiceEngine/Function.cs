@@ -19,9 +19,9 @@ namespace PizzaTime.VoiceEngine
             app = new App(pollyClient);
         }
 
-        public async Task FunctionHandler(string input, ILambdaContext context)
+        public async Task FunctionHandler(string input)
         {
-            //await app.Speak(input);
+            await app.Speak(input);
         }
     }
 }

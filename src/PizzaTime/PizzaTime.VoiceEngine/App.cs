@@ -32,8 +32,18 @@ namespace PizzaTime.VoiceEngine
 
             var result = await pollyClient.SynthesizeSpeechAsync(request);
 
-            var mp3Streamer = new Mp3Streamer();
-            await mp3Streamer.StreamMp3(result.AudioStream);
+            var streamMp3 = new StreamMp3();
+            var buffer = streamMp3.StartBuffering(result.AudioStream);
+
+            while (!streamMp3.IsReadyToPlay)
+            {
+                Thread.Sleep(100);
+            }
+
+            var playTask = streamMp3.StartPlaying();
+
+            await playTask;
+            await buffer;
         }
     }
 }
