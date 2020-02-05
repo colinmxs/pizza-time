@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Core.Tests", "Piz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceEngine", "PizzaTime.VoiceEngine\PizzaTime.VoiceEngine.csproj", "{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaTime.Console", "PizzaTime.Console\PizzaTime.Console.csproj", "{AD5F79ED-8310-4D32-8459-4C549A3553D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Console", "PizzaTime.Console\PizzaTime.Console.csproj", "{AD5F79ED-8310-4D32-8459-4C549A3553D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaTime.AudioStreamer", "PizzaTime.AudioStreamer\PizzaTime.AudioStreamer.csproj", "{9ED17415-ACB5-49C3-8544-A130FE8D393D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
