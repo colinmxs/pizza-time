@@ -2,6 +2,7 @@
 using Amazon.Polly.Model;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PizzaTime.VoiceFileGenerator
@@ -21,19 +22,21 @@ namespace PizzaTime.VoiceFileGenerator
         }
 
         internal async Task ProcessAsync(MessageBody message)
-        {
+        {             
             var request = new SynthesizeSpeechRequest()
             {
                 Engine = Engine.Neural,
                 LanguageCode = LanguageCode.EnUS,
                 OutputFormat = OutputFormat.Mp3,
                 Text = message.Input,
-                TextType = TextType.Ssml,
-                VoiceId = message.Voice
+                TextType = TextType.Text,
+                VoiceId = VoiceId.Matthew
             };
 
             var pollyResult = await polly.SynthesizeSpeechAsync(request);
-            await s3.UploadObjectFromStreamAsync(bucketName, $"{message.Voice}/{message.Type}/{message.Input.Replace(' ', '-')}", pollyResult.AudioStream, null);
+            var memStream = new MemoryStream();
+            pollyResult.AudioStream.CopyTo(memStream);            
+            await s3.UploadObjectFromStreamAsync(bucketName, $"{message.Voice}/{message.Type}/{message.Input.Replace(' ', '-')}", memStream, null);
         }
     }
 }

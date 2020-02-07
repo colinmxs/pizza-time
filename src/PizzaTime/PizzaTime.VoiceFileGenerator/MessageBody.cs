@@ -2,10 +2,10 @@
 
 namespace PizzaTime.VoiceFileGenerator
 {
-    class MessageBody
+    public class MessageBody
     {
-        public string Input { get; internal set; }
-        public VoiceId Voice { get; internal set; }
-        public string Type { get; internal set; }
+        public string Input { get; set; }
+        public string Voice { get; set; }
+        public string Type { get; set; }
     }
 }

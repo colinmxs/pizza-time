@@ -300,12 +300,7 @@
                                     ]
                                 ]
                             },
-                            "Principal" : {
-                                "Fn::GetAtt" : [
-                                    "S3Bucket",
-                                    "Arn"
-                                ]
-                            }
+                            "Principal" : "*"
                         }
                     ]
                 },
