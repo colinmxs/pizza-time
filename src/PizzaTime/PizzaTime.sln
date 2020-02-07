@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceEngine", "Pi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Console", "PizzaTime.Console\PizzaTime.Console.csproj", "{AD5F79ED-8310-4D32-8459-4C549A3553D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaTime.AudioStreamer", "PizzaTime.AudioStreamer\PizzaTime.AudioStreamer.csproj", "{9ED17415-ACB5-49C3-8544-A130FE8D393D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceApi", "PizzaTime.VoiceApi\PizzaTime.VoiceApi.csproj", "{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceFileGenerator", "PizzaTime.VoiceFileGenerator\PizzaTime.VoiceFileGenerator.csproj", "{8274F81F-9C85-448D-AC7F-CBC32C38512E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9ED17415-ACB5-49C3-8544-A130FE8D393D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8274F81F-9C85-448D-AC7F-CBC32C38512E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8274F81F-9C85-448D-AC7F-CBC32C38512E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8274F81F-9C85-448D-AC7F-CBC32C38512E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8274F81F-9C85-448D-AC7F-CBC32C38512E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

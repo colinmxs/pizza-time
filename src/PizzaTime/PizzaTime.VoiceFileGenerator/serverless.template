@@ -1,0 +1,363 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description"              : "Voice file generator for Pizza Time",
+    "Parameters"               : {
+        "Environment" : {
+            "Type" : "String",
+            "Default" : "Development"
+        },
+        "LambdaFunctionName" : {
+            "Type" : "String",
+            "Default" : "VoiceFileGenerator"
+        },
+        "IsProd"             : {
+            "Type" : "String",
+            "Default" : "False",
+            "AllowedValues" : [
+                "True",
+                "False"
+            ]
+        },
+        "CodeBucketName"         : {
+            "Type": "String"
+        },
+        "ShouldCreateBucket": {
+          "Type": "String",
+          "AllowedValues": [
+            "true",
+            "false"
+          ],
+          "Default" : "true",
+          "Description": "If true then the S3 bucket that will be proxied will be created with the CloudFormation stack."
+        },
+        "BucketName": {
+          "Type": "String",
+          "Description": "Name of S3 bucket that will be proxied. If left blank a name will be generated.",
+          "MinLength": "0"
+        }
+    },
+    "Conditions"               : {
+        "IsProd" : {
+            "Fn::Equals" : [
+                {
+                    "Ref" : "IsProd"
+                },
+                "True"
+            ]
+        },
+        "CreateS3Bucket": {
+          "Fn::Equals": [
+            {
+              "Ref": "ShouldCreateBucket"
+            },
+            "true"
+          ]
+        },
+        "BucketNameGenerated": {
+          "Fn::Equals": [
+            {
+              "Ref": "BucketName"
+            },
+            ""
+          ]
+        }
+    },
+    "Resources"                : {
+        "Lambda" : {
+            "Type" : "AWS::Lambda::Function",
+            "Properties" : {
+                "Handler" : "PizzaTime.VoiceFileGenerator::PizzaTime.VoiceFileGenerator.Function::FunctionHandler",
+                "Runtime" : "dotnetcore2.1",
+                "Description" : "Uses amazon polly sdk to generate voice files, stores them in s3",
+                "FunctionName" : {
+                    "Ref" : "LambdaFunctionName"
+                },
+                "MemorySize"   : 256,
+                "Timeout"      : 300,
+                "Role"         : {
+                    "Fn::GetAtt" : [
+                        "IAMRole",
+                        "Arn"
+                    ]
+                },
+                "Environment"  : {
+                    "Variables" : {
+                        "ASPNETCORE_ENVIRONMENT" : {
+                            "Ref" : "Environment"
+                        }
+                    }
+                },
+                "Code"         : {
+                    "S3Bucket" : {
+                        "Ref" : "CodeBucketName"
+                    },
+                    "S3Key"    : "publish.zip"
+                },
+                "Tags"         : [                    
+                    {
+                        "Key" : "Project",
+                        "Value" : "PizzaTime"
+                    },
+                    {
+                        "Key" : "Service",
+                        "Value" : "VoiceFileGenerator"
+                    }
+                ]
+            },
+            "DependsOn"  : "IAMRole"
+        },
+        "IAMRole"   : {
+            "Type" : "AWS::IAM::Role",
+            "Properties" : {
+                "AssumeRolePolicyDocument" : {
+                    "Version" : "2012-10-17",
+                    "Statement" : [
+                        {
+                            "Effect" : "Allow",
+                            "Principal" : {
+                                "Service" : [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action"    : [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "IAMPolicy" : {
+            "Type" : "AWS::IAM::Policy",
+            "Properties" : {
+                "PolicyDocument" : {
+                    "Version" : "2012-10-17",
+                    "Statement" : [
+                        {
+                            "Effect" : "Allow",
+                            "Action" : "lambda:InvokeFunction",
+                            "Resource" : {
+                                "Fn::GetAtt" : [
+                                    "Lambda",
+                                    "Arn"
+                                ]
+                            }
+                        },
+                        {
+                            "Effect" : "Allow",
+                            "Action" : [
+                                "logs:CreateLogGroup",
+                                "logs:CreateLogStream",
+                                "logs:PutLogEvents"
+                            ],
+                            "Resource" : {
+                                "Fn::Join" : [
+                                    "",
+                                    [
+                                        "arn:aws:logs:us-west-2:",
+                                        {
+                                            "Ref" : "AWS::AccountId"
+                                        },
+                                        ":*"
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "Effect" : "Allow",
+                            "Action" : [
+                                "s3:PutObject"
+                            ],
+                            "Resource" : {
+                                "Fn::Join" : [
+                                    "",
+                                    [
+                                        {
+                                            "Fn::GetAtt" : [
+                                                "S3Bucket",
+                                                "Arn"
+                                            ]
+                                        },
+                                        "/*"
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "Effect" : "Allow",
+                            "Action" : [
+                                "sqs:ReceiveMessage",
+                                "sqs:GetQueueAttributes",
+                                "sqs:DeleteMessage"
+                            ],
+                            "Resource" : {
+                                "Fn::GetAtt" : [
+                                    "SQSQueue",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "PolicyName"     : "BsuFileRetrieverPolicy",
+                "Roles"          : [
+                    {
+                        "Ref" : "IAMRole"
+                    }
+                ]
+            },
+            "DependsOn"  : [
+                "IAMRole",
+                "Lambda",
+                "S3Bucket"
+            ]            
+        },
+        "S3Bucket"    : {
+            "Type": "AWS::S3::Bucket",
+            "Condition": "CreateS3Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Fn::If": [
+                    "BucketNameGenerated",
+                    {
+                        "Ref": "AWS::NoValue"
+                    },
+                    {
+                        "Ref": "BucketName"
+                    }
+                    ]
+                }        
+            }
+        },
+        "SQSQueue"    : {
+            "Type" : "AWS::SQS::Queue",
+          "Properties": {
+            "DelaySeconds": 0,
+            "VisibilityTimeout": 301,
+            "QueueName": "PizzaTime-VoiceFileGeneratorQueue",
+            "RedrivePolicy": {
+              "deadLetterTargetArn": {
+                "Fn::GetAtt": [
+                  "SQSDLQueue",
+                  "Arn"
+                ]
+              },
+              "maxReceiveCount": 4
+            },
+            "Tags": [
+            {
+                "Key" : "Project",
+                "Value" : "PizzaTime"
+            },
+            {
+                "Key" : "Service",
+                "Value" : "VoiceFileGenerator"
+            }
+            ]
+          },
+            "DependsOn"  : [
+                "SQSDLQueue"
+            ]
+        },
+        "SQSDLQueue" : {
+            "Type" : "AWS::SQS::Queue",
+          "Properties": {
+            "DelaySeconds": 0,
+            "VisibilityTimeout": 301,
+            "QueueName": "PizzaTime-VoiceFileGeneratorQueue-DeadLetter",
+            "Tags": [
+              {
+                "Key" : "Project",
+                "Value" : "PizzaTime"
+            },
+            {
+                "Key" : "Service",
+                "Value" : "VoiceFileGenerator"
+            }
+            ]
+          }
+        },
+        "S3BucketPolicy"  : {
+            "Type" : "AWS::S3::BucketPolicy",
+            "Properties" : {
+                "PolicyDocument" : {
+                    "Version" : "2012-10-17",
+                    "Statement" : [
+                        {
+                            "Action" : "s3:GetObject",
+                            "Effect" : "Allow",
+                            "Resource" : {
+                                "Fn::Join" : [
+                                    "",
+                                    [
+                                        {
+                                            "Fn::GetAtt" : [
+                                                "S3Bucket",
+                                                "Arn"
+                                            ]
+                                        },
+                                        "/*"
+                                    ]
+                                ]
+                            },
+                            "Principal" : {
+                                "Fn::GetAtt" : [
+                                    "S3Bucket",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "Bucket"         : {
+                    "Ref" : "S3Bucket"
+                }
+            },
+            "DependsOn"  : [
+                "S3Bucket"
+            ]
+        },
+        "LambdaEventSourceMapping" : {
+            "Type" : "AWS::Lambda::EventSourceMapping",
+            "Properties" : {
+                "BatchSize" : 1,
+                "EventSourceArn" : {
+                    "Fn::GetAtt" : [
+                        "SQSQueue",
+                        "Arn"
+                    ]
+                },
+                "FunctionName"   : {
+                    "Fn::GetAtt" : [
+                        "Lambda",
+                        "Arn"
+                    ]
+                }
+            },
+            "DependsOn"  : [
+                "Lambda",
+                "IAMRole",
+                "IAMPolicy",
+                "SQSQueue"
+            ]
+        },
+        "LambdaPermission"         : {
+            "Type" : "AWS::Lambda::Permission",
+            "Properties" : {
+                "FunctionName" : {
+                    "Fn::GetAtt" : [
+                        "Lambda",
+                        "Arn"
+                    ]
+                },
+                "Action"       : "lambda:InvokeFunction",
+                "Principal"    : "events.amazonaws.com"
+            },
+            "DependsOn"  : [
+                "Lambda"
+            ]
+        }
+    },
+    "Outputs"                  : {
+    }
+}
