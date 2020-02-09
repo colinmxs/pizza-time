@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Core", "PizzaTime
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Core.Tests", "PizzaTime.Core.Tests\PizzaTime.Core.Tests.csproj", "{FC8218CF-E9D8-4F10-B715-ADFB83B70EF3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceEngine", "PizzaTime.VoiceEngine\PizzaTime.VoiceEngine.csproj", "{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.Console", "PizzaTime.Console\PizzaTime.Console.csproj", "{AD5F79ED-8310-4D32-8459-4C549A3553D8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceApi", "PizzaTime.VoiceApi\PizzaTime.VoiceApi.csproj", "{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceFileGenerator", "PizzaTime.VoiceFileGenerator\PizzaTime.VoiceFileGenerator.csproj", "{8274F81F-9C85-448D-AC7F-CBC32C38512E}"
@@ -29,14 +25,6 @@ Global
 		{FC8218CF-E9D8-4F10-B715-ADFB83B70EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC8218CF-E9D8-4F10-B715-ADFB83B70EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC8218CF-E9D8-4F10-B715-ADFB83B70EF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3DBE699-DFEA-433B-89C8-458A0E22AF9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD5F79ED-8310-4D32-8459-4C549A3553D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B56AC4D6-688A-43AB-B967-9AEC8D7D1829}.Release|Any CPU.ActiveCfg = Release|Any CPU
