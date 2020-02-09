@@ -1,18 +1,16 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Lambda.Core;
-using Amazon.Lambda.SQSEvents;
 using Amazon.Polly;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-
 namespace PizzaTime.VoiceFileGenerator
 {
     public class Function
@@ -23,14 +21,23 @@ namespace PizzaTime.VoiceFileGenerator
             Configuration = configuration;
         }
 
-        public async Task FunctionHandler(SQSEvent evnt, ILambdaContext context)
+        public async Task FunctionHandler(string input, ILambdaContext context)
         {
-            var app = new App(Polly, S3, Configuration);
-            foreach (var message in evnt.Records)
+            string[] lines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            List<MessageBody> messages = new List<MessageBody>();
+            foreach (var line in lines)
             {
-                var messageBody = JsonConvert.DeserializeObject<MessageBody>(message.Body);
-                await app.ProcessAsync(messageBody);
+                var columns = line.Split("\t");
+                messages.Add(new MessageBody
+                {
+                    Voice = columns[0],
+                    Type = columns[1],                    
+                    Input = columns[2]                    
+                });
             }
+
+            var app = new App(Polly, S3, Configuration);            
+            await app.ProcessAsync(messages);
         }
 
         internal static IConfiguration Configuration { get; private set; }

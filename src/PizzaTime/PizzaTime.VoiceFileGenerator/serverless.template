@@ -72,8 +72,8 @@
                 "FunctionName" : {
                     "Ref" : "LambdaFunctionName"
                 },
-                "MemorySize"   : 256,
-                "Timeout"      : 300,
+                "MemorySize"   : 3008,
+                "Timeout"      : 900,
                 "Role"         : {
                     "Fn::GetAtt" : [
                         "IAMRole",
@@ -228,55 +228,7 @@
                     ]
                 }        
             }
-        },
-        "SQSQueue"    : {
-            "Type" : "AWS::SQS::Queue",
-          "Properties": {
-            "DelaySeconds": 0,
-            "VisibilityTimeout": 301,
-            "QueueName": "PizzaTime-VoiceFileGeneratorQueue",
-            "RedrivePolicy": {
-              "deadLetterTargetArn": {
-                "Fn::GetAtt": [
-                  "SQSDLQueue",
-                  "Arn"
-                ]
-              },
-              "maxReceiveCount": 4
-            },
-            "Tags": [
-            {
-                "Key" : "Project",
-                "Value" : "PizzaTime"
-            },
-            {
-                "Key" : "Service",
-                "Value" : "VoiceFileGenerator"
-            }
-            ]
-          },
-            "DependsOn"  : [
-                "SQSDLQueue"
-            ]
-        },
-        "SQSDLQueue" : {
-            "Type" : "AWS::SQS::Queue",
-          "Properties": {
-            "DelaySeconds": 0,
-            "VisibilityTimeout": 301,
-            "QueueName": "PizzaTime-VoiceFileGeneratorQueue-DeadLetter",
-            "Tags": [
-              {
-                "Key" : "Project",
-                "Value" : "PizzaTime"
-            },
-            {
-                "Key" : "Service",
-                "Value" : "VoiceFileGenerator"
-            }
-            ]
-          }
-        },
+        },        
         "S3BucketPolicy"  : {
             "Type" : "AWS::S3::BucketPolicy",
             "Properties" : {
@@ -311,47 +263,7 @@
             "DependsOn"  : [
                 "S3Bucket"
             ]
-        },
-        "LambdaEventSourceMapping" : {
-            "Type" : "AWS::Lambda::EventSourceMapping",
-            "Properties" : {
-                "BatchSize" : 1,
-                "EventSourceArn" : {
-                    "Fn::GetAtt" : [
-                        "SQSQueue",
-                        "Arn"
-                    ]
-                },
-                "FunctionName"   : {
-                    "Fn::GetAtt" : [
-                        "Lambda",
-                        "Arn"
-                    ]
-                }
-            },
-            "DependsOn"  : [
-                "Lambda",
-                "IAMRole",
-                "IAMPolicy",
-                "SQSQueue"
-            ]
-        },
-        "LambdaPermission"         : {
-            "Type" : "AWS::Lambda::Permission",
-            "Properties" : {
-                "FunctionName" : {
-                    "Fn::GetAtt" : [
-                        "Lambda",
-                        "Arn"
-                    ]
-                },
-                "Action"       : "lambda:InvokeFunction",
-                "Principal"    : "events.amazonaws.com"
-            },
-            "DependsOn"  : [
-                "Lambda"
-            ]
-        }
+        }                
     },
     "Outputs"                  : {
     }
