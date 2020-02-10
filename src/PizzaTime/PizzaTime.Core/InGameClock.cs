@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace PizzaTime.Core
 {
-    public class InGameClock
+    public class InGameClock : IUpdate
     {
         public DateTime CurrentTime { get; private set; }
         public int TimeMultiplier { get; }
         public DateTime StartTime { get; set; }
-        
-        private int Interval = 100;
-        private Thread updateThread;
         
         public InGameClock(int timeMultiplier)
         {
@@ -20,23 +17,14 @@ namespace PizzaTime.Core
         public void Start()
         {
             CurrentTime = StartTime;
-            updateThread = new Thread(UpdateLoop);
-            updateThread.IsBackground = true;
-            updateThread.Start();
+            var gameThread = GameThread.Instance();
+            gameThread.Subscribe(this);
         }
 
-        private void UpdateLoop()
+        public Task Update(int interval) 
         {
-            while (true)
-            {
-                UpdateClock();
-                Thread.Sleep(Interval);
-            }
-        }
-
-        private void UpdateClock() 
-        {
-            CurrentTime = CurrentTime.AddMilliseconds(Interval * TimeMultiplier);
+            CurrentTime = CurrentTime.AddMilliseconds(interval * TimeMultiplier);
+            return Task.CompletedTask;
         }
     }
 }
