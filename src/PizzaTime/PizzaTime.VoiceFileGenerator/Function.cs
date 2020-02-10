@@ -28,12 +28,15 @@ namespace PizzaTime.VoiceFileGenerator
             foreach (var line in lines)
             {
                 var columns = line.Split("\t");
-                messages.Add(new MessageBody
+                if (columns[0] != "Voice") 
                 {
-                    Voice = columns[0],
-                    Type = columns[1],                    
-                    Input = columns[2]                    
-                });
+                    messages.Add(new MessageBody
+                    {
+                        Voice = columns[0],
+                        Type = columns[1],
+                        Input = columns[2]
+                    });
+                }                
             }
 
             var app = new App(Polly, S3, Configuration);            

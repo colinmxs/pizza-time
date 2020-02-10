@@ -182,20 +182,6 @@
                                     ]
                                 ]
                             }
-                        },
-                        {
-                            "Effect" : "Allow",
-                            "Action" : [
-                                "sqs:ReceiveMessage",
-                                "sqs:GetQueueAttributes",
-                                "sqs:DeleteMessage"
-                            ],
-                            "Resource" : {
-                                "Fn::GetAtt" : [
-                                    "SQSQueue",
-                                    "Arn"
-                                ]
-                            }
                         }
                     ]
                 },

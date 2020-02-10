@@ -37,10 +37,21 @@ namespace PizzaTime.VoiceFileGenerator
                     Text = message.Input,
                     TextType = TextType.Text
                 };
-                
-                var voice = getVoices.Voices.Single(v => v.Name == message.Voice);
-                request.VoiceId = voice.Id;
-                tasks.Add(ProcessCore(request, message));
+
+                if (message.Voice == "All")
+                {
+                    foreach (var voice in getVoices.Voices)
+                    {
+                        request.VoiceId = voice.Id;
+                        tasks.Add(ProcessCore(request, message));
+                    }
+                }
+                else 
+                {
+                    var voice = getVoices.Voices.Single(v => v.Name == message.Voice);
+                    request.VoiceId = voice.Id;
+                    tasks.Add(ProcessCore(request, message));
+                }
             }
             await Task.WhenAll(tasks);
         }
