@@ -1,4 +1,5 @@
 ﻿using PizzaTime.Core;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class TelephoneController : MonoBehaviour
     public Sprite WithoutReciever;
     private Image Image;
     private bool RecieverHungUp = true;
+    private AudioClip AudioClip;
     private Telephone Telephone;
 
     private void Awake()
@@ -19,9 +21,14 @@ public class TelephoneController : MonoBehaviour
     private void Update()
     {
         HandleRecieverSwap();
+        HandleToggleRinger();       
+    }
+
+    private void HandleToggleRinger()
+    {
         if (Telephone.IsRinging)
         {
-            Debug.Log("TELHPONE RIGING");
+            
         }
     }
 
