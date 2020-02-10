@@ -13,8 +13,9 @@ namespace PizzaTime.Core
             Ringing
         }
 
-        public double ChanceModifier { get; set; } = 0.0001f;
+        public double ChanceModifier { get; set; } = 0.01f;
         public bool IsRinging => State == Status.Ringing;
+        public bool IsInUse => State == Status.InUse;
         private Status State;
         private Random random = new Random();
         private ICallService _callService;
@@ -46,7 +47,7 @@ namespace PizzaTime.Core
         public Conversation AnswerCall()
         {
             State = Status.InUse;
-            return _currentCall.Conversation;
+            return new Conversation();// null; _currentCall.Conversation;
         }
 
         public void EndCall()

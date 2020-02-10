@@ -1257,7 +1257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.94000244, y: -5.19}
+  m_AnchoredPosition: {x: 0.94000244, y: -5.189972}
   m_SizeDelta: {x: -35.22, y: -49.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &658581150
@@ -3043,7 +3043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.21955706, y: 0.18026616}
   m_AnchorMax: {x: 0.78400004, y: 0.32500002}
-  m_AnchoredPosition: {x: 1.5, y: 2.8999634}
+  m_AnchoredPosition: {x: 1.5, y: 2.899994}
   m_SizeDelta: {x: -3, y: -9.799999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1734994080
@@ -3306,8 +3306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.11579183, y: 1}
-  m_AnchoredPosition: {x: 0.80029297, y: 4.244812}
-  m_SizeDelta: {x: 1.6, y: 8.5896}
+  m_AnchoredPosition: {x: 29.999878, y: 33.300003}
+  m_SizeDelta: {x: 60.1, y: 66.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921893308
 MonoBehaviour:
@@ -3359,6 +3359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WithReciever: {fileID: 21300000, guid: 18c34a2389497b64dbf8c3da1441d0a3, type: 3}
   WithoutReciever: {fileID: 21300000, guid: 7669a2a4bcbb6a04283baccce89c4350, type: 3}
+  RingClip: {fileID: 8300000, guid: 798da8c29269ff5449ea05188ace3a67, type: 3}
+  DialToneClip: {fileID: 8300000, guid: fd17c2d5e84088642a3ecff33db09b7d, type: 3}
 --- !u!82 &1921893311
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3369,11 +3371,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 798da8c29269ff5449ea05188ace3a67, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
