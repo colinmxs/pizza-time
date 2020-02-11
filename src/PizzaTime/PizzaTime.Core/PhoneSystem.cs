@@ -12,17 +12,18 @@ namespace PizzaTime.Core
         private Random random = new Random();
         private ICallService _callService;        
 
-        public PhoneSystem(ICallService callService)
+        public PhoneSystem(ICallService callService, int availableLines)
         {
             _callService = callService;
             var gameThread = GameThread.Instance();
             gameThread.Subscribe(this);
-            PhoneLines = new List<PhoneLine>
+            var lines = new List<PhoneLine>();
+            for (int i = 0; i < availableLines; i++)
             {
-                new PhoneLine(),
-                new PhoneLine(),
-                new PhoneLine()
-            };
+                lines.Add(new PhoneLine());
+            }
+
+            PhoneLines = new List<PhoneLine>(lines);
         }
 
         public Task Update(int interval)
