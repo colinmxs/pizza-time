@@ -1,6 +1,7 @@
 ﻿namespace PizzaTime.Core
 {
-    public class Conversation
+    public interface IConversation { }
+    public class Conversation : IConversation
     {
     }
 }
