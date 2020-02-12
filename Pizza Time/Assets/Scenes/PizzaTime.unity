@@ -1304,7 +1304,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1921893310}
-        m_MethodName: ToggleReciever
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3043,7 +3043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.21955706, y: 0.18026616}
   m_AnchorMax: {x: 0.78400004, y: 0.32500002}
-  m_AnchoredPosition: {x: 1.5, y: 2.899994}
+  m_AnchoredPosition: {x: 1.5, y: 2.8999634}
   m_SizeDelta: {x: -3, y: -9.799999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1734994080
