@@ -1,5 +1,5 @@
 ﻿using PizzaTime.Core;
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,93 +7,60 @@ public class TelephoneController : MonoBehaviour
 {
     public Sprite WithReciever;
     public Sprite WithoutReciever;
-    private Image Image;
-    private bool RecieverHungUp = true;
+    private Image _image;
+
     public AudioClip RingClip;
     public AudioClip DialToneClip;
-    private AudioSource AudioSource;
-    private Telephone Telephone;
-    private Conversation Conversation = null;
+    private AudioSource _audioSource;
+
+    private PhoneLine telephone;
+    private PhoneLine.State knownState;
 
     private void Awake()
     {
-        Image = GetComponent<Image>();
-        AudioSource = GetComponent<AudioSource>();
-        Telephone = new Telephone(null);
+        _image = GetComponent<Image>();
+        _audioSource = GetComponent<AudioSource>();
+        telephone = new PhoneSystem(null, 1).PhoneLines.First();
+        knownState = telephone.Status;
     }
 
     private void Update()
     {
-        HandleRecieverSwap();
-        HandleToggleRinger();
-        HandleToggleDialtone();
-        HandleAnswerPhoneCall();
-        HandleEndPhoneCall();
-    }
-
-    private void HandleToggleDialtone()
-    {
-        if (!Telephone.IsRinging && !Telephone.IsInUse) 
+        if(telephone.Status != knownState)
         {
-            if (!AudioSource.isPlaying && !RecieverHungUp)
-            {
-                AudioSource.clip = DialToneClip;
-                AudioSource.Play();
-            }
-            else if (AudioSource.isPlaying && AudioSource.clip == DialToneClip && RecieverHungUp)
-            {
-                AudioSource.Stop();
-            }
-        }        
-    }
-
-    private void HandleEndPhoneCall()
-    {
-        if (Telephone.IsInUse && (RecieverHungUp || Conversation == null))
-        {
-            Telephone.EndCall();
+            Redraw();
+            knownState = telephone.Status;
         }
     }
 
-    private void HandleAnswerPhoneCall()
+    public void OnClick()
     {
-        if(Telephone.IsRinging && !RecieverHungUp)
-        {
-            var conversation = Telephone.AnswerCall();
-            //AudioSource.clip = GetConversationClip(conversation);
-        }
+        if (telephone.Status == PhoneLine.State.OnHook) telephone.PickedUp();
+        else telephone.HungUp();
     }
 
-    private void HandleToggleRinger()
+    public void Redraw()
     {
-        if (RecieverHungUp) 
+        Debug.LogError(telephone.Status);
+        switch (telephone.Status)
         {
-            if (Telephone.IsRinging && !AudioSource.isPlaying)
-            {
-                AudioSource.clip = RingClip;
-                AudioSource.Play();
-            }            
+            case PhoneLine.State.OnHook:
+                _image.sprite = WithReciever;
+                _audioSource.Stop();
+                break;
+            case PhoneLine.State.OffHook:
+                _image.sprite = WithoutReciever;
+                _audioSource.clip = DialToneClip;
+                _audioSource.Play();
+                break;
+            case PhoneLine.State.Ringing:
+                _audioSource.clip = RingClip;
+                _audioSource.Play();
+                break;
+            case PhoneLine.State.Connected:                
+                break;
+            case PhoneLine.State.Holding:
+                break;
         }
-        if (!Telephone.IsRinging && AudioSource.clip == RingClip && AudioSource.isPlaying)
-        {
-            AudioSource.Stop();
-        }
-    }
-
-    private void HandleRecieverSwap()
-    {
-        if (RecieverHungUp && Image.sprite == WithoutReciever)
-        {
-            Image.sprite = WithReciever;
-        }
-        else if (!RecieverHungUp && Image.sprite == WithReciever)
-        {
-            Image.sprite = WithoutReciever;
-        }
-    }
-
-    public void ToggleReciever()
-    {
-        RecieverHungUp = !RecieverHungUp;        
     }
 }

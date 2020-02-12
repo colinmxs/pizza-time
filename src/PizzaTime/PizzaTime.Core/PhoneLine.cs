@@ -1,10 +1,9 @@
 ﻿using Stateless;
 using System;
-using System.Threading.Tasks;
 
 namespace PizzaTime.Core
 {
-    public class PhoneLine : IUpdate
+    public class PhoneLine
     {
         enum Trigger
         {
@@ -76,7 +75,7 @@ namespace PizzaTime.Core
             Console.WriteLine("[Timer:] Call ended at {0}", DateTime.Now);
         }
 
-        public void Dialed(string callee)
+        internal void Dialed(string callee)
         {
             _machine.Fire(_incomingCallTrigger, callee);
         }
@@ -94,11 +93,6 @@ namespace PizzaTime.Core
         public void HoldButtonPressed()
         {
             _machine.Fire(Trigger.HoldButtonPressed);
-        }
-
-        public Task Update(int interval)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -50,10 +50,12 @@ namespace PizzaTime.Core
 
         private async Task DoStuff()
         {
+            var tasks = new List<Task>();
             foreach (var method in UpdateMethods)
             {
-                await method.Invoke(Interval).ConfigureAwait(false);
+                tasks.Add(method.Invoke(Interval));
             }
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
     }
 }
