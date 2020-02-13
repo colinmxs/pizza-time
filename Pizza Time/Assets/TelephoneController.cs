@@ -35,13 +35,13 @@ public class TelephoneController : MonoBehaviour
 
     public void OnClick()
     {
-        if (telephone.Status == PhoneLine.State.OnHook) telephone.PickedUp();
+        if (_image.sprite == WithReciever) telephone.PickedUp();
         else telephone.HungUp();
     }
 
     public void Redraw()
     {
-        Debug.LogError(telephone.Status);
+        Debug.Log(telephone.Status);
         switch (telephone.Status)
         {
             case PhoneLine.State.OnHook:
@@ -57,7 +57,8 @@ public class TelephoneController : MonoBehaviour
                 _audioSource.clip = RingClip;
                 _audioSource.Play();
                 break;
-            case PhoneLine.State.Connected:                
+            case PhoneLine.State.Connected:
+                _image.sprite = WithoutReciever;
                 break;
             case PhoneLine.State.Holding:
                 break;

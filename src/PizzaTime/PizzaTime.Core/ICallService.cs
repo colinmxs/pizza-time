@@ -4,6 +4,6 @@ namespace PizzaTime.Core
 {
     public interface ICallService
     {
-        Task<Call> GetCall();
+        Call GetCall();
     }
 }

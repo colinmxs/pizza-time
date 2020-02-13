@@ -10,7 +10,8 @@ namespace PizzaTime.Core
             IncomingCallDetected,
             PhonePickedUp,
             HoldButtonPressed,
-            PhoneHungUp
+            PhoneHungUp,
+            CallDisconnected
         }
 
         public enum State
@@ -25,29 +26,31 @@ namespace PizzaTime.Core
         public State Status { get; private set; } = State.OnHook;
 
         StateMachine<State, Trigger> _machine;
-        StateMachine<State, Trigger>.TriggerWithParameters<string> _incomingCallTrigger;
+        StateMachine<State, Trigger>.TriggerWithParameters<Call> _incomingCallTrigger;
 
-        string _callee;
+        Call _call;
 
         public PhoneLine()
         {
             _machine = new StateMachine<State, Trigger>(() => Status, s => Status = s);
 
-            _incomingCallTrigger = _machine.SetTriggerParameters<string>(Trigger.IncomingCallDetected);
+            _incomingCallTrigger = _machine.SetTriggerParameters<Call>(Trigger.IncomingCallDetected);
 
             _machine.Configure(State.OnHook)
               .Permit(Trigger.IncomingCallDetected, State.Ringing)
               .Permit(Trigger.PhonePickedUp, State.OffHook);
 
             _machine.Configure(State.Ringing)
-                .OnEntryFrom(_incomingCallTrigger, callee => OnDialed(callee))
-              .Permit(Trigger.PhonePickedUp, State.Connected);
+                .OnEntryFrom(_incomingCallTrigger, call => OnDialed(call))
+              .Permit(Trigger.PhonePickedUp, State.Connected)
+              .Permit(Trigger.CallDisconnected, State.OnHook);
 
             _machine.Configure(State.Connected)
                 .OnEntry(t => StartCallTimer())
                 .OnExit(t => StopCallTimer())
               .Permit(Trigger.HoldButtonPressed, State.Holding)
-              .Permit(Trigger.PhoneHungUp, State.OnHook);
+              .Permit(Trigger.PhoneHungUp, State.OnHook)
+              .Permit(Trigger.CallDisconnected, State.OffHook);
 
             _machine.Configure(State.Holding)
                 .SubstateOf(State.Connected)
@@ -59,10 +62,10 @@ namespace PizzaTime.Core
             _machine.OnTransitioned(t => Console.WriteLine($"OnTransitioned: {t.Source} -> {t.Destination} via {t.Trigger}({string.Join(", ", t.Parameters)})"));
         }
         
-        void OnDialed(string callee)
+        void OnDialed(Call call)
         {
-            _callee = callee;
-            Console.WriteLine("[Phone Call] placed for : [{0}]", _callee);
+            _call = call;
+            Console.WriteLine("[Phone Call] placed for : [{0}]", _call);
         }
 
         void StartCallTimer()
@@ -75,9 +78,14 @@ namespace PizzaTime.Core
             Console.WriteLine("[Timer:] Call ended at {0}", DateTime.Now);
         }
 
-        internal void Dialed(string callee)
+        internal void Dialed(Call call)
         {
-            _machine.Fire(_incomingCallTrigger, callee);
+            _machine.Fire(_incomingCallTrigger, call);
+        }
+
+        internal void Disconnected()
+        {
+            _machine.Fire(Trigger.CallDisconnected);
         }
 
         public void PickedUp()

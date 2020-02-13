@@ -35,7 +35,8 @@ namespace PizzaTime.Core
                 var line = PhoneLines.FirstOrDefault(p => p.Status == PhoneLine.State.OnHook);
                 if (line != null) 
                 {
-                    line.Dialed("Colin");
+                    var caller = _callService.GetCall();
+                    line.Dialed(caller);
                 }
             }
             return Task.CompletedTask;
