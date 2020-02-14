@@ -26,15 +26,15 @@ namespace PizzaTime.Core
         public State Status { get; private set; } = State.OnHook;
 
         StateMachine<State, Trigger> _machine;
-        StateMachine<State, Trigger>.TriggerWithParameters<Call> _incomingCallTrigger;
+        StateMachine<State, Trigger>.TriggerWithParameters<IPhoneCall> _incomingCallTrigger;
 
-        Call _call;
+        IPhoneCall _call;
 
         public PhoneLine()
         {
             _machine = new StateMachine<State, Trigger>(() => Status, s => Status = s);
 
-            _incomingCallTrigger = _machine.SetTriggerParameters<Call>(Trigger.IncomingCallDetected);
+            _incomingCallTrigger = _machine.SetTriggerParameters<IPhoneCall>(Trigger.IncomingCallDetected);
 
             _machine.Configure(State.OnHook)
               .Permit(Trigger.IncomingCallDetected, State.Ringing)
@@ -62,7 +62,7 @@ namespace PizzaTime.Core
             _machine.OnTransitioned(t => Console.WriteLine($"OnTransitioned: {t.Source} -> {t.Destination} via {t.Trigger}({string.Join(", ", t.Parameters)})"));
         }
         
-        void OnDialed(Call call)
+        void OnDialed(IPhoneCall call)
         {
             _call = call;
             Console.WriteLine("[Phone Call] placed for : [{0}]", _call);
@@ -78,12 +78,12 @@ namespace PizzaTime.Core
             Console.WriteLine("[Timer:] Call ended at {0}", DateTime.Now);
         }
 
-        internal void Dialed(Call call)
+        internal void InitiateCall(IPhoneCall call)
         {
             _machine.Fire(_incomingCallTrigger, call);
         }
 
-        internal void Disconnected()
+        internal void Disconnect()
         {
             _machine.Fire(Trigger.CallDisconnected);
         }

@@ -1,11 +1,12 @@
 ﻿namespace PizzaTime.Core
 {
-    public interface ICall 
+    public interface IPhoneCall 
     {
         IConversation Conversation { get; set; }
     }
-    public class Call : ICall
+    public class PhoneCall : IPhoneCall
     {
         public IConversation Conversation { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
     }
 }
