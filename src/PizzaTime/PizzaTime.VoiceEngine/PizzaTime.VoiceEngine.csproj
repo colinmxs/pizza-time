@@ -1,18 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <AWSProjectType>Lambda</AWSProjectType>
-    <UserSecretsId>caf7cd09-524a-4f2c-a1d0-3a46d4f20332</UserSecretsId>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\colinsmith1\source\repos\pizza-time\Pizza Time\Assets\VoiceEngine\</OutputPath>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
-    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
-    <PackageReference Include="AWSSDK.Polly" Version="3.3.103.39" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
-    <PackageReference Include="NAudio" Version="1.10.0" />
-  </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <OutputPath>C:\Users\colinsmith1\Source\Repos\pizza-time\Pizza Time\Assets\VoiceEngine\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <OutputPath>C:\Users\colinsmith1\Source\Repos\pizza-time\Pizza Time\Assets\VoiceEngine\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AWSSDK.Polly" Version="3.3.103.43" />
+      <PackageReference Include="NAudio" Version="1.10.0" />
+    </ItemGroup>
+
 </Project>

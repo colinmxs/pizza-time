@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PizzaTime.Core
+namespace PizzaTime.Core.Phones
 {
     public interface IPhoneSystem
     {

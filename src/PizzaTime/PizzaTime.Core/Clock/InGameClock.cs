@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PizzaTime.Core
+namespace PizzaTime.Core.Clock
 {
     public class InGameClock : IUpdate
     {
         public DateTime CurrentTime { get; private set; }
         public int TimeMultiplier { get; }
         public DateTime StartTime { get; set; }
-        
+
         public InGameClock(int timeMultiplier)
         {
-            TimeMultiplier = timeMultiplier;            
+            TimeMultiplier = timeMultiplier;
         }
 
         public void Start()
@@ -21,7 +21,7 @@ namespace PizzaTime.Core
             gameThread.Subscribe(this);
         }
 
-        public Task Update(int interval) 
+        public Task Update(int interval)
         {
             CurrentTime = CurrentTime.AddMilliseconds(interval * TimeMultiplier);
             return Task.CompletedTask;

@@ -1,6 +1,5 @@
 ﻿using Amazon.Polly;
 using Amazon.Polly.Model;
-using NAudio.Wave;
 using System;
 using System.IO;
 using System.Threading;

@@ -1,7 +1,7 @@
 ﻿using Stateless;
 using System;
 
-namespace PizzaTime.Core
+namespace PizzaTime.Core.Phones
 {
     public class PhoneLine
     {
