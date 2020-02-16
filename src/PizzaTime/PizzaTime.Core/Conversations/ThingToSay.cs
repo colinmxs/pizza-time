@@ -1,14 +1,22 @@
-﻿namespace PizzaTime.Core.Conversations
+﻿using PizzaTime.Core.Conversations.ThingToSayCategories;
+
+namespace PizzaTime.Core.Conversations
 {
     public interface IThingToSay
     {
-        string Text { get; set; }
-        IThingToSayCategory Category { get; set; }
+        string Text { get; }
+        IThingToSayCategory Category { get; }
     }
 
     public class ThingToSay : IThingToSay
     {
-        public string Text { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public IThingToSayCategory Category { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public IThingToSayCategory Category { get; private set; }
+        public string Text { get; private set; }
+        
+        public ThingToSay(string text, IThingToSayCategory category)
+        {
+            Text = text;
+            Category = category;
+        }
     }
 }

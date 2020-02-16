@@ -22,4 +22,8 @@
     <PackageReference Include="Stateless" Version="4.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaTime.VoiceEngine\PizzaTime.VoiceEngine.csproj" />
+  </ItemGroup>
+
 </Project>

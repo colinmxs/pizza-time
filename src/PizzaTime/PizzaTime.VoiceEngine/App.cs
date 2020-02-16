@@ -10,7 +10,6 @@ namespace PizzaTime.VoiceEngine
     public class App
     {
         private readonly IAmazonPolly pollyClient;
-        public byte[] buffer = new byte[1024 * 16];
 
         public App(IAmazonPolly polly)
         {

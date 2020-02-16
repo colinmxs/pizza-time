@@ -1,32 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PizzaTime.Core.Conversations
 {
     public interface IConversationParticipant
     {
-        IEnumerable<IThingToSay> ThingsToSay { get; set; }
-        void SayThing(IThingToSay thingToSay);
+        IEnumerable<IThingToSay> ThingsToSay { get; set; }        
         void HearThing(IThingToSay thingToHear);
-        void JoinConversation(IConversation convo);
     }
 
     public class ConversationParticipant : IConversationParticipant
     {
-        public IEnumerable<IThingToSay> ThingsToSay { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        private readonly IEnumerable<IThingToSay> _speechBank;
+        public IEnumerable<IThingToSay> ThingsToSay { get; set; }
+
+        public ConversationParticipant(IEnumerable<IThingToSay> thingsToSay)
+        {
+            _speechBank = thingsToSay;
+        }
 
         public void HearThing(IThingToSay thingToHear)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void JoinConversation(IConversation convo)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SayThing(IThingToSay thingToSay)
-        {
-            throw new System.NotImplementedException();
+            if (thingToHear == null) throw new ArgumentNullException(nameof(thingToHear));
+            var responseCategories = thingToHear.Category.ResponseCategories;
+            ThingsToSay = _speechBank.Where(tts => responseCategories.Contains(tts.Category));
         }
     }
 }
