@@ -4,10 +4,7 @@ namespace PizzaTime.Core.Conversations.ThingToSayCategories
 {
     public class PhoneNumberRequest : ThingToSayCategory
     {
-        public PhoneNumberRequest() : base(nameof(PhoneNumberRequest), new List<IThingToSayCategory>
-        {
-
-        })
+        public PhoneNumberRequest() : base(nameof(PhoneNumberRequest), PhoneNumberResponse)
         { }
     }
 }

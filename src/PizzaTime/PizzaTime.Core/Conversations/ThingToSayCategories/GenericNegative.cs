@@ -4,10 +4,7 @@ namespace PizzaTime.Core.Conversations.ThingToSayCategories
 {
     public class GenericNegative : ThingToSayCategory
     {
-        public GenericNegative() : base(nameof(GenericNegative), new List<IThingToSayCategory>
-        {
-
-        })
+        public GenericNegative() : base(nameof(GenericNegative), AddressRequest, AddressVerification, HoldRequest, OrderRequest, OrderVerification, PhoneNumberRequest, PhoneNumberVerification)
         { }
     }
 }

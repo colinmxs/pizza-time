@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace PizzaTime.Core.Conversations.ThingToSayCategories
+﻿namespace PizzaTime.Core.Conversations.ThingToSayCategories
 {
     public class PhoneNumberVerification : ThingToSayCategory
     {
-        public PhoneNumberVerification() : base(nameof(PhoneNumberVerification), new List<IThingToSayCategory>
-        {
-
-        })
+        public PhoneNumberVerification() : base(nameof(PhoneNumberVerification), GenericAffirmative, GenericAffirmative, PhoneNumberResponse)
         { }
     }
 }

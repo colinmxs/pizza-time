@@ -4,10 +4,7 @@ namespace PizzaTime.Core.Conversations.ThingToSayCategories
 {
     public class GenericAffirmative : ThingToSayCategory
     {
-        public GenericAffirmative() : base(nameof(GenericAffirmative), new List<IThingToSayCategory>
-        {
-            new AddressRequest(), new HoldRequest(), new PhoneNumberRequest(), new OrderRequest(), new AddressVerification()
-        })
+        public GenericAffirmative() : base(nameof(GenericAffirmative), AddressRequest, AddressVerification, HoldRequest, OrderRequest, OrderVerification, PhoneNumberRequest, PhoneNumberVerification)
         { }
     }
 }

@@ -4,10 +4,7 @@ namespace PizzaTime.Core.Conversations.ThingToSayCategories
 {
     public class HoldRequest : ThingToSayCategory
     {
-        public HoldRequest() : base(nameof(HoldRequest), new List<IThingToSayCategory>
-        {
-
-        })
+        public HoldRequest() : base(nameof(HoldRequest), GenericNegative, GenericAffirmative)
         { }
     }
 }
