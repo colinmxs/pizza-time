@@ -1,6 +1,4 @@
-﻿using PizzaTime.Core.Conversations.ThingToSayCategories;
-
-namespace PizzaTime.Core.Conversations
+﻿namespace PizzaTime.Core.Conversations
 {
     public interface IThingToSay
     {

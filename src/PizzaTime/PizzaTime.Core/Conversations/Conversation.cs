@@ -8,7 +8,7 @@ namespace PizzaTime.Core.Conversations
     {
         event Action<IThingToSay> SayThing;
         IEnumerable<IConversationParticipant> Participants { get; }
-        Task Say(IThingToSay thingToSay);
+        Task Say(IThingToSay thingToSay, IConversationParticipant participant);
         void AddToConversation(IConversationParticipant participant);
     }
     public class Conversation : IConversation
@@ -18,7 +18,7 @@ namespace PizzaTime.Core.Conversations
 
         public Conversation(List<IConversationParticipant> participants)
         {
-            _participants.ForEach(p => AddToConversation(p));
+            participants.ForEach(p => AddToConversation(p));
         }
 
         public event Action<IThingToSay> SayThing;
@@ -31,9 +31,11 @@ namespace PizzaTime.Core.Conversations
             SayThing += participant.HearThing;
         }
 
-        public async Task Say(IThingToSay thingToSay)
+        public async Task Say(IThingToSay thingToSay, IConversationParticipant participant)
         {
+            SayThing -= participant.HearThing;
             SayThing(thingToSay);
+            SayThing += participant.HearThing;
         }
     }
 }

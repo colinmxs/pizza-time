@@ -24,7 +24,7 @@ namespace PizzaTime.Core.Conversations
         {
             if (thingToHear == null) throw new ArgumentNullException(nameof(thingToHear));
             var responseCategories = thingToHear.Category.ResponseCategories;
-            ThingsToSay = _speechBank.Where(tts => responseCategories.Contains(tts.Category));
+            ThingsToSay = _speechBank.Where(tts => responseCategories.Contains(tts.Category.Name));
         }
     }
 }
