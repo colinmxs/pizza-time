@@ -1,4 +1,6 @@
-﻿namespace PizzaTime.Core.Phones
+﻿using PizzaTime.Core.Conversations;
+
+namespace PizzaTime.Core.Phones
 {
     public interface IPhoneCall 
     {
