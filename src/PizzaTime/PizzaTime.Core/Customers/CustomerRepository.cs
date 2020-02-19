@@ -6,7 +6,17 @@
 
     public class CustomerRepository : ICustomerRepository
     {
-        private List<Customer> _customers = new List<Customer>();
+        private List<Customer> _customers;
+
+        public CustomerRepository() 
+        {
+            _customers = new List<Customer>();
+        }
+
+        public CustomerRepository(IEnumerable<Customer> customers)
+        {
+            _customers = customers.ToList();
+        }
 
         public void Add(Customer customer)
         {
