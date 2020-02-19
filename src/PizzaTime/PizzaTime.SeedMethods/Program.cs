@@ -12,7 +12,7 @@ namespace PizzaTime.SeedMethods
             customerSeed.AmountToSeed = 100;
             foreach (var item in await customerSeed.Seed())
             {
-                Console.WriteLine($"{item.FirstName} {item.LastName}, :: {item.Address}");
+                Console.WriteLine($"{item.FirstName} {item.LastName} :: {item.Address}");
             }
         }
     }
