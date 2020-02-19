@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceFileGenerato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.VoiceEngine", "PizzaTime.VoiceEngine\PizzaTime.VoiceEngine.csproj", "{F6143059-43E1-4C5B-856F-ABE3EC0C08FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaTime.ConversationConsole", "PizzaTime.ConversationConsole\PizzaTime.ConversationConsole.csproj", "{64294455-4CD4-4FB3-8074-EB2CB97ACDDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.ConversationConsole", "PizzaTime.ConversationConsole\PizzaTime.ConversationConsole.csproj", "{64294455-4CD4-4FB3-8074-EB2CB97ACDDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaTime.SeedMethods", "PizzaTime.SeedMethods\PizzaTime.SeedMethods.csproj", "{670CA0C4-ACD3-40A8-B2D3-AF146696E346}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{64294455-4CD4-4FB3-8074-EB2CB97ACDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64294455-4CD4-4FB3-8074-EB2CB97ACDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64294455-4CD4-4FB3-8074-EB2CB97ACDDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
