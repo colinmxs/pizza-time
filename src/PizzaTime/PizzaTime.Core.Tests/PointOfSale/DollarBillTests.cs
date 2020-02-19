@@ -2,6 +2,7 @@
 {
     using FakeItEasy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PizzaTime.Core.PaymentOptions;
     using PizzaTime.Core.PointOfSale;
     using Shouldly;
     using System;

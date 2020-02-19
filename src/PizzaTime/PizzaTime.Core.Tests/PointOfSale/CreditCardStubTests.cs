@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PizzaTime.Core.PointOfSale;
+    using PizzaTime.Core.Tickets;
     using Shouldly;
     using System;
 

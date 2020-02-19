@@ -2,10 +2,13 @@
 {
     using FakeItEasy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PizzaTime.Core.Orders;
     using PizzaTime.Core.PointOfSale;
+    using PizzaTime.Core.Printers;
     using Shouldly;
     using System;
     using System.Collections.Generic;
+    using static PizzaTime.Core.Orders.Order;
 
     [TestClass]
     public class PrinterTests
@@ -14,7 +17,7 @@
         public void PrintsKitchenTicket()
         {
             var printer = new Printer();
-            var order = new Order(Order.OrderType.Delivery)
+            var order = new Order(OrderType.Delivery)
             {
                 OrderItems = new List<IOrderItem>
                 {

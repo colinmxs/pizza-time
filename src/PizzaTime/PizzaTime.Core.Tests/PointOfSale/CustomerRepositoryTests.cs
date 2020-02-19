@@ -1,6 +1,7 @@
 ﻿namespace PizzaTime.Core.Tests.PointOfSale
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PizzaTime.Core.Customers;
     using PizzaTime.Core.PointOfSale;
     using Shouldly;
 

@@ -1,6 +1,7 @@
 ﻿namespace PizzaTime.Core.Tests.PointOfSale
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PizzaTime.Core.Food.Pizzas.Core;
     using PizzaTime.Core.PointOfSale;
     using Shouldly;
     using System;
@@ -17,12 +18,12 @@
                 new PizzaIngredient
                 {
                     Name = "Pepperoni",
-                    Cost = 2M
+                    CostPerServing = 2M
                 },
                 new PizzaIngredient
                 {
                     Name = "Pineapple",
-                    Cost = .5M
+                    CostPerServing = .5M
                 }
             };
 

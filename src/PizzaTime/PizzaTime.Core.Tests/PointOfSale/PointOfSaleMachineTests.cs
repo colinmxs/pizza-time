@@ -2,11 +2,16 @@
 {
     using FakeItEasy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PizzaTime.Core.CashRegisters;
+    using PizzaTime.Core.Customers;
+    using PizzaTime.Core.Orders;
     using PizzaTime.Core.PointOfSale;
     using PizzaTime.Core.PointOfSale.Requests;
+    using PizzaTime.Core.Printers;
+    using PizzaTime.Core.Tickets;
     using Shouldly;
     using System;
-    using static PizzaTime.Core.PointOfSale.Order;
+    using static PizzaTime.Core.Orders.Order;
 
     [TestClass]
     public class PointOfSaleMachineTests
@@ -66,22 +71,6 @@
         }
 
         [TestMethod]
-        public void SignIn_SetsCurrentScreenToMenu()
-        {
-            //arrange
-            var signInRequest = new SignInRequest()
-            {
-                Passcode = "admin"
-            };
-
-            //act
-            var result = pointOfSaleMachine.SignIn(signInRequest);
-
-            //assert
-            pointOfSaleMachine.CurrentScreen.ShouldBe(Screen.Menu);
-        }
-
-        [TestMethod]
         public void SignIn_FailsWithoutProperCredentials()
         {
             //arrange
@@ -121,31 +110,7 @@
             result.Success.ShouldBeTrue();
             result.Order.ShouldBe(order);
             A.CallTo(() => orderRepo.Add(A<Order>.That.Matches(o => o == order))).MustHaveHappened();
-        }
-
-        [TestMethod]
-        public void PlaceOrder_SetsCurrentScreenToOrders()
-        {
-            //arrange
-            var order = new Order(OrderType.DineIn)
-            {
-                OrderItems = new IOrderItem[]
-                {
-                    A.Fake<IOrderItem>()
-                }
-            };
-
-            var placeOrderRequest = new PlaceOrderRequest
-            {
-                Order = order
-            };
-
-            //act
-            var result = pointOfSaleMachine.PlaceOrder(placeOrderRequest);
-
-            //assert
-            pointOfSaleMachine.CurrentScreen.ShouldBe(Screen.Orders);
-        }
+        }        
 
         [TestMethod]
         public void PlaceOrder_PrintsTickets()
