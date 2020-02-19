@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <OutputPath>C:\Users\colinsmith1\Source\Repos\pizza-time\Pizza Time\Assets\VoiceEngine\</OutputPath>
+        <OutputPath>bin\Debug</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <OutputPath>C:\Users\colinsmith1\Source\Repos\pizza-time\Pizza Time\Assets\VoiceEngine\</OutputPath>
+        <OutputPath>bin\Release</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
