@@ -1,6 +1,5 @@
-﻿using Amazon.S3;
+﻿using PizzaTime.Core.Customers;
 using PizzaTime.Core.Phones;
-using System.Threading.Tasks;
 
 namespace PizzaTime.Core
 {
@@ -11,16 +10,17 @@ namespace PizzaTime.Core
 
     public class PhoneCallService : IPhoneCallService
     {
-        private readonly IAmazonS3 _s3Client;
+        private readonly ICustomerRepository _repo;
 
-        public PhoneCallService(IAmazonS3 s3Client) 
+        public PhoneCallService(ICustomerRepository repo)
         {
-            _s3Client = s3Client;
+            _repo = repo;
         }
 
         public IPhoneCall GetCall()
         {
-            return null;
+            var customer = _repo.GetRandom();
+            return new PhoneCall(customer);
         }
     }
 }
