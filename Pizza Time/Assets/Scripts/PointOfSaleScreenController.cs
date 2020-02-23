@@ -12,6 +12,9 @@ using UnityEngine.Events;
 using Screen = PizzaTime.Core.PointOfSale.Screen;
 using System.Linq;
 using PizzaTime.Core.Food.Pizzas.Core;
+using System.Threading.Tasks;
+using CodenameGenerator.Lite;
+using System;
 
 public class PointOfSaleScreenController : MonoBehaviour
 {
@@ -52,6 +55,12 @@ public class PointOfSaleScreenController : MonoBehaviour
         views = GetComponentsInChildren<IPointOfSaleView>();
         orderRepo = new OrderRepository();
         pos = new PointOfSaleMachine(cashRegi, new CustomerRepository(), orderRepo, new Printer());
+        var seed = new SeedCustomers()
+        {
+            AmountToSeed = 100
+        };
+        var custies = seed.Seed().Result;
+        
         
         if (views != null)
         {
@@ -72,93 +81,6 @@ public class PointOfSaleScreenController : MonoBehaviour
 
     public void KeyboardClack()
     {
-        var list = new List<Order>
-        {
-            new Order(Order.OrderType.DineIn)
-                {
-                    Customer = new Customer("Colin", "Smith", "1234567890")
-                    {
-                        Address = "20 Hidden Hollow Ln",
-                        ZipCode = "83338"
-                    },
-                    OrderItems = new List<IOrderItem>
-                    {
-                        new PizzaOrderItem(new Pizza(new List<PizzaIngredient>
-                        {
-                            new PizzaIngredient
-                            {
-                                CostPerServing = 1.5M,
-                                Name = "Pepperoni"
-                            }
-                        }))
-                    }                    
-                },
-            new Order(Order.OrderType.DineIn)
-                {
-                    Customer = new Customer("David", "Miller", "0987654321")
-                    {
-                        Address = "3948 Boston Ln",
-                        ZipCode = "39927"
-                    },
-                    OrderItems = new List<IOrderItem>
-                    {
-                        new PizzaOrderItem(new Pizza(new List<PizzaIngredient>
-                        {
-                            new PizzaIngredient
-                            {
-                                CostPerServing = 1.5M,
-                                Name = "Pepperoni"
-                            }
-                        }))
-                    }
-                },
-            new Order(Order.OrderType.DineIn)
-                {
-                    Customer = new Customer("Phil", "Merrell", "9077767893")
-                    {
-                        Address = "20 Boise Street",
-                        ZipCode = "83704"
-                    },
-                    OrderItems = new List<IOrderItem>
-                    {
-                        new PizzaOrderItem(new Pizza(new List<PizzaIngredient>
-                        {
-                            new PizzaIngredient
-                            {
-                                CostPerServing = 1.5M,
-                                Name = "Pepperoni"
-                            }
-                        }))
-                    }
-                },
-            new Order(Order.OrderType.DineIn)
-                {
-                    Customer = new Customer("Eric", "Salvia", "4499329183")
-                    {
-                        Address = "27373 lOS ANGEHLSE",
-                        ZipCode = "WHAT"
-                    },
-                    OrderItems = new List<IOrderItem>
-                    {
-                        new PizzaOrderItem(new Pizza(new List<PizzaIngredient>
-                        {
-                            new PizzaIngredient
-                            {
-                                CostPerServing = 1.5M,
-                                Name = "Pepperoni"
-                            }
-                        }))
-                    }
-                }
-        };
-
-        foreach (var item in list)
-        {
-            var result = pos.PlaceOrder(new PlaceOrderRequest
-            {
-                Order = item
-            });
-        }
         OnKeyboardClack.Invoke();
     }
 
@@ -193,5 +115,63 @@ public class PointOfSaleScreenController : MonoBehaviour
         };
         var result = pos.SignIn(request);
         if (result.Success) TryActivateScreen(Screen.Menu);
+    }
+
+    public class SeedCustomers
+    {
+        public int AmountToSeed { get; set; }
+        private readonly System.Random _random;
+        private readonly Generator _generator;
+        private readonly Func<System.Random, string> GenerateZipCode = r => r.Next(10000, 99999).ToString();
+        private readonly Func<System.Random, string> GenerateAreaCode = r => r.Next(0, 999).ToString().PadRight(3, '0');
+        private readonly Func<Generator, string> GenerateMaleFirstName = g => { g.SetParts(WordBank.MaleFirstNames); return g.GenerateAsync().Result; };
+        private readonly Func<Generator, string> GenerateFemaleFirstName = g => { g.SetParts(WordBank.FirstNames); return g.GenerateAsync().Result; };
+        private readonly Func<Generator, string> GenerateLastName = g => { g.SetParts(WordBank.LastNames); return g.GenerateAsync().Result; };
+        private readonly Func<Generator, string> GenerateStreetName = g => { g.SetParts(WordBank.Nouns, RoadSuffixes); return g.GenerateAsync().Result; };
+
+        private static readonly WordBank RoadSuffixes = new ArrayBackedWordBank(new string[] { "Road", "Street", "Plaza", "Way", "Avenue", "Drive", "Lane", "Grove", "Gardens", "Place" });
+
+
+        public SeedCustomers()
+        {
+            _generator = new Generator(" ", Casing.PascalCase);
+            _random = new System.Random();
+        }
+
+        public async Task<IEnumerable<Customer>> Seed()
+        {
+            var customers = new List<Customer>();
+
+            for (int i = 0; i < AmountToSeed; i++)
+            {
+                customers.Add(SeedFemaleCustomer());
+                customers.Add(SeedMaleCustomer());
+            }
+            return customers;
+        }
+
+        private Customer SeedFemaleCustomer()
+        {
+            var areaCode = GenerateAreaCode(_random);
+            var firstName = GenerateFemaleFirstName(_generator);
+            var lastName = GenerateLastName(_generator);
+            return new Customer(firstName, lastName, $"{GenerateAreaCode(_random)}-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
+            {
+                Address = $"{GenerateAreaCode(_random)} {GenerateStreetName(_generator)}",
+                ZipCode = GenerateZipCode(_random)
+            };
+        }
+
+        private Customer SeedMaleCustomer()
+        {
+            var areaCode = GenerateAreaCode(_random);
+            var firstName = GenerateMaleFirstName(_generator);
+            var lastName = GenerateLastName(_generator);
+            return new Customer(firstName, lastName, $"{GenerateAreaCode(_random)}-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
+            {
+                Address = $"{GenerateAreaCode(_random)} {GenerateStreetName(_generator)}",
+                ZipCode = GenerateZipCode(_random)
+            };
+        }
     }
 }
