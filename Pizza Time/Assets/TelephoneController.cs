@@ -1,4 +1,5 @@
 ﻿using PizzaTime.Core;
+using PizzaTime.Core.Phones;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,9 @@ public class TelephoneController : MonoBehaviour
     {
         _image = GetComponent<Image>();
         _audioSource = GetComponent<AudioSource>();
-        telephone = new PhoneSystem(null, 1).PhoneLines.First();
+        var phoneSystem = new PhoneSystem(1);
+        telephone = phoneSystem.PhoneLines.First();
+        var callDispatcher = new CallDispatcher();
         knownState = telephone.Status;
     }
 
