@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace PizzaTime.Core
 {
-    class CallDispatcher : IUpdate
+    public class CallDispatcher : IUpdate
     {
-        public double ChanceModifier { get; set; } = 0.01f;
+        public double ChanceModifier { get; set; } = 0.51f;
         private Random random = new Random();
         private IPhoneCallService _callService;
         private IPhoneSystem _phoneSystem;
