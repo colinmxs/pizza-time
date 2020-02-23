@@ -6,11 +6,14 @@
 
     public class CustomerRepository : ICustomerRepository
     {
-        private List<Customer> _customers;
+        private readonly List<Customer> _customers;
+        private readonly Random _random;
+        private int Next => _random.Next(_customers.Count);
 
         public CustomerRepository() 
         {
             _customers = new List<Customer>();
+            _random = new Random();
         }
 
         public CustomerRepository(IEnumerable<Customer> customers)
@@ -31,6 +34,11 @@
         public Customer GetByPhoneNumber(string phoneNumber)
         {
             return _customers.SingleOrDefault(customer => customer.PhoneNumber == phoneNumber);
+        }
+
+        public Customer GetRandom()
+        {            
+            return _customers[Next];
         }
 
         public void Remove(Customer customer)
