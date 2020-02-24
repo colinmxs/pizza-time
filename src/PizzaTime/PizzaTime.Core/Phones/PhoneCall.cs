@@ -1,7 +1,10 @@
 ﻿using PizzaTime.Core.Conversations;
 using PizzaTime.Core.Customers;
+using PizzaTime.Core.Orders;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace PizzaTime.Core.Phones
 {
@@ -11,23 +14,22 @@ namespace PizzaTime.Core.Phones
     }
     public class PhoneCall : IPhoneCall
     {
-        private readonly Customer _customer;
         public IConversationParticipant Caller { get; }
         public IConversationParticipant Player { get; }
-        public PhoneCall(Customer customer)
+        public PhoneCall(Order order)
         {
-            if (_customer == null) throw new ArgumentNullException(nameof(customer));
-
-            _customer = customer;
+            if (order == null) throw new ArgumentNullException(nameof(order));
+            if (order.Customer == null) throw new ArgumentNullException(nameof(order.Customer));
+            
             Caller = new ConversationParticipant(new List<IThingToSay>()
             {
                 new ThingToSay("Delivery, please.", ThingToSayCategory.PhoneGreetingResponse),
                 new ThingToSay("Pickup, please.", ThingToSayCategory.PhoneGreetingResponse),
                 new ThingToSay("No", ThingToSayCategory.GenericNegative),
                 new ThingToSay("Yes", ThingToSayCategory.GenericAffirmative),
-                new ThingToSay(_customer.PhoneNumber, ThingToSayCategory.PhoneNumberResponse),
-                new ThingToSay(_customer.Address, ThingToSayCategory.AddressResponse),
-                new ThingToSay("I'd like to order two large pepperoni pizzas", ThingToSayCategory.OrderResponse)
+                new ThingToSay(order.Customer.PhoneNumber, ThingToSayCategory.PhoneNumberResponse),
+                new ThingToSay(order.Customer.Address, ThingToSayCategory.AddressResponse),
+                GetOrderThingToSay(order)
             });
             Player = new ConversationParticipant(new List<IThingToSay>()
             {
@@ -42,6 +44,27 @@ namespace PizzaTime.Core.Phones
             });
 
             Conversation = new Conversation(new List<IConversationParticipant> { Caller, Player });
+        }
+
+        private IThingToSay GetOrderThingToSay(Order order)
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var item in order.OrderItems)
+            {
+                stringBuilder.AppendLine($"A {item.Name} ");
+                if(item.SpecialInstructions.Any())
+                {
+                    stringBuilder.AppendLine("with ");
+
+                    foreach (var instruction in item.SpecialInstructions)
+                    {
+                        stringBuilder.Append($"{instruction}, ");
+                    }
+                    stringBuilder.Append(".");
+                }
+            }
+            return new ThingToSay(stringBuilder.ToString(), ThingToSayCategory.OrderResponse);
         }
 
         public IConversation Conversation { get; }

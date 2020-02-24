@@ -6,5 +6,6 @@ namespace PizzaTime.Core.Orders
     {
         bool Add(Order order);
         IEnumerable<Order> GetOrders(int page);
+        Order GetRandom();
     }
 }

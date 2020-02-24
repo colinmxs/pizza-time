@@ -23,7 +23,7 @@ public class TelephoneController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         var phoneSystem = new PhoneSystem(1);
         telephone = phoneSystem.PhoneLines.First();
-        var callDispatcher = new CallDispatcher();
+        var callDispatcher = new CallDispatcher(null, phoneSystem);
         knownState = telephone.Status;
     }
 

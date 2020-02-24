@@ -3,6 +3,6 @@
     public class PizzaSize
     {
         public decimal CostMultiplier { get; internal set; }
-        public object Name { get; internal set; }
+        public string Name { get; internal set; }
     }
 }

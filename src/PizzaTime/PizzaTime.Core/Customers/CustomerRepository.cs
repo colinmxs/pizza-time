@@ -6,13 +6,12 @@
 
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly List<Customer> _customers;
+        private readonly List<Customer> _customers = new List<Customer>();
         private readonly Random _random;
         private int Next => _random.Next(_customers.Count);
 
         public CustomerRepository() 
-        {
-            _customers = new List<Customer>();
+        {            
             _random = new Random();
         }
 
