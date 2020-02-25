@@ -1,4 +1,4 @@
-﻿namespace PizzaTime.Core.Food.Pizzas.Core
+﻿namespace PizzaTime.Core.Food.Core
 {
     public class PizzaSize
     {

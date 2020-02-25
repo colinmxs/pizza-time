@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace PizzaTime.Core.Food.Pizzas.Core
+﻿namespace PizzaTime.Core.Food.Core
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Pizza
     {
         public Pizza(List<PizzaIngredient> ingredients)
