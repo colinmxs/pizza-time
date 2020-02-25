@@ -1,10 +1,10 @@
-﻿using PizzaTime.Core.Food.Pizzas.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PizzaTime.Core.Orders
+﻿namespace PizzaTime.Core.Orders
 {
+    using PizzaTime.Core.Food.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class PizzaOrderItem : IOrderItem
     {
         private readonly Pizza pizza;
