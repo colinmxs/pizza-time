@@ -7,9 +7,9 @@ namespace PizzaTime.Core
     public class CallDispatcher : IUpdate
     {
         public double ChanceModifier { get; set; } = 0.51f;
-        private Random random = new Random();
-        private IPhoneCallService _callService;
-        private IPhoneSystem _phoneSystem;
+        private readonly Random _random = new Random();
+        private readonly IPhoneCallService _callService;
+        private readonly IPhoneSystem _phoneSystem;
 
         public CallDispatcher(IPhoneCallService callService, IPhoneSystem phoneSystem)
         {
@@ -22,7 +22,7 @@ namespace PizzaTime.Core
         public Task Update(int interval)
         {
             var multiplier = interval / 100;
-            var next = random.NextDouble();
+            var next = _random.NextDouble();
             if ((1d - (ChanceModifier * multiplier)) <= next)
             {
                 _phoneSystem.TryConnect(_callService.GetCall());
