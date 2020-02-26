@@ -35,11 +35,8 @@ internal class SeedOrders
 
         var nextPizza = _random.Next(pizzasCount);
         var nextSize = _random.Next(4);
-
-
-
-        var order = new Order(orderType);
-
+        
+        var order = new Order(orderType);        
 
 
         return new Order(orderType)

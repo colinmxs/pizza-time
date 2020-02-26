@@ -1,5 +1,5 @@
 ﻿using PizzaTime.Core.Customers;
-using PizzaTime.Core.Food.Pizzas.Core;
+using PizzaTime.Core.Food.Core;
 using PizzaTime.Core.Orders;
 using System.Collections.Generic;
 using System.Linq;
