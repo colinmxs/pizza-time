@@ -6,13 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 internal class SeedOrders
-{
-    enum OrderTypes 
-    {
-        
-        
-        
-    }
+{    
     public int AmountToSeed { get; set; }
     private readonly Random _random;
 
