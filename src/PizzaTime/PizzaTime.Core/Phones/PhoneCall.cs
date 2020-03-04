@@ -11,6 +11,8 @@ namespace PizzaTime.Core.Phones
     public interface IPhoneCall 
     {
         IConversation Conversation { get; }
+        IConversationParticipant Caller { get; }
+        IConversationParticipant Player { get; }
     }
     public class PhoneCall : IPhoneCall
     {
@@ -19,7 +21,6 @@ namespace PizzaTime.Core.Phones
         public PhoneCall(Order order)
         {
             if (order == null) throw new ArgumentNullException(nameof(order));
-            if (order.Customer == null) throw new ArgumentNullException(nameof(order.Customer));
             
             Caller = new ConversationParticipant(new List<IThingToSay>()
             {
