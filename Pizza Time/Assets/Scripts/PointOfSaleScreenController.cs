@@ -3,7 +3,6 @@ using UnityEngine;
 using PizzaTime.Core.PointOfSale;
 using PizzaTime.Core.CashRegisters;
 using PizzaTime.Core.PointOfSale.Interfaces;
-using PizzaTime.Core.Customers;
 using PizzaTime.Core.Orders;
 using PizzaTime.Core.Printers;
 using PizzaTime.Core.PaymentOptions;
@@ -11,15 +10,15 @@ using PizzaTime.Core.PointOfSale.Requests;
 using UnityEngine.Events;
 using Screen = PizzaTime.Core.PointOfSale.Screen;
 using System.Linq;
-using PizzaTime.Core.Food.Core;
 
 public partial class PointOfSaleScreenController : MonoBehaviour
 {
     public IPointOfSaleMachine pos;
     public UnityEvent OnKeyboardClack;
+    public SeederController Seeder;
+
     IEnumerable<IPointOfSaleView> views;
-    OrderRepository orderRepo;
-    private void Awake()
+    private void Start()
     {
         var cashRegi = new CashRegister(new CashDrawer(new List<DollarBill> 
         {
@@ -50,19 +49,8 @@ public partial class PointOfSaleScreenController : MonoBehaviour
             DollarBill.One
         }));
         views = GetComponentsInChildren<IPointOfSaleView>();
-        var seedOrders = new SeedOrders() 
-        {
-            AmountToSeed = 100
-        };
-        var orders = seedOrders.Seed().Result;
-        orderRepo = new OrderRepository(orders);
-        
-        var seedCustomers = new SeedCustomers()
-        {
-            AmountToSeed = 100
-        };
-        var custies = seedCustomers.Seed().Result;
-        pos = new PointOfSaleMachine(cashRegi, new CustomerRepository(custies), orderRepo, new Printer());
+
+        pos = new PointOfSaleMachine(cashRegi, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
         
         if (views != null)
         {
