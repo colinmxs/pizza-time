@@ -28,7 +28,7 @@ namespace PizzaTime.Core.Phones
         StateMachine<State, Trigger> _machine;
         StateMachine<State, Trigger>.TriggerWithParameters<IPhoneCall> _incomingCallTrigger;
 
-        IPhoneCall _call;
+        public IPhoneCall Call { get; private set; }
 
         public PhoneLine()
         {
@@ -64,8 +64,8 @@ namespace PizzaTime.Core.Phones
         
         void OnDialed(IPhoneCall call)
         {
-            _call = call;
-            Console.WriteLine("[Phone Call] placed for : [{0}]", _call);
+            Call = call;
+            Console.WriteLine("[Phone Call] placed for : [{0}]", Call);
         }
 
         void StartCallTimer()
