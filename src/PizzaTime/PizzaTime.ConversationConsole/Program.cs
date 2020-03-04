@@ -11,6 +11,7 @@ namespace PizzaTime.ConversationConsole
         static async Task Main(string[] args)
         {
             var greeting = new ThingToSay("Pickup? Or delivery?", ThingToSayCategory.PhoneGreeting);
+            //var voiceEngine = new VoiceEngine.App()
             var participant1 = new ConversationParticipant(new List<IThingToSay>()
             {
                 greeting,
@@ -39,6 +40,7 @@ namespace PizzaTime.ConversationConsole
             
             //var tts = participant1.ThingsToSay.Single(t => t.Category == ThingToSayCategory.PhoneGreeting);
             conversation.SayThing += t => Console.WriteLine(t.Text);
+            //conversation.SayThing += t => 
             await conversation.Say(greeting, participant1);
             while (true)
             {
