@@ -7,14 +7,9 @@
     public class CustomerRepository : ICustomerRepository
     {
         private readonly List<Customer> _customers = new List<Customer>();
-        private readonly Random _random;
+        private readonly Random _random = new Random();
         private int Next => _random.Next(_customers.Count);
-
-        public CustomerRepository() 
-        {            
-            _random = new Random();
-        }
-
+        
         public CustomerRepository(IEnumerable<Customer> customers)
         {
             _customers = customers.ToList();

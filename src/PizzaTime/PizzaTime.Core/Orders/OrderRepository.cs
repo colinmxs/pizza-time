@@ -7,15 +7,10 @@ namespace PizzaTime.Core.Orders
     public class OrderRepository : IOrderRepository
     {
         private readonly List<Order> _orders = new List<Order>();
-        private readonly Random _random;
+        private readonly Random _random = new Random();
         private int orderCounter = 0;
         private int pageSize = 100;
-        private int Next => _random.Next(_orders.Count);
-
-        public OrderRepository()
-        {
-            _random = new Random();
-        }
+        private int Next => _random.Next(_orders.Count);        
 
         public OrderRepository(IEnumerable<Order> orders)
         {
