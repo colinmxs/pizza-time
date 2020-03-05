@@ -6,17 +6,18 @@ namespace PizzaTime.Core.Conversations
 {
     public interface IConversationParticipant
     {
-        IEnumerable<IThingToSay> ThingsToSay { get; set; }        
+        IEnumerable<IThingToSay> ThingsToSay { get; }        
         void HearThing(IThingToSay thingToHear);
     }
 
     public class ConversationParticipant : IConversationParticipant
     {
         private readonly IEnumerable<IThingToSay> _speechBank;
-        public IEnumerable<IThingToSay> ThingsToSay { get; set; }
+        public IEnumerable<IThingToSay> ThingsToSay { get; private set; }
 
-        public ConversationParticipant(IEnumerable<IThingToSay> thingsToSay)
+        public ConversationParticipant(IEnumerable<IThingToSay> thingsToSay, IThingToSay firstThingToSay)
         {
+            ThingsToSay = new List<IThingToSay> { firstThingToSay };
             _speechBank = thingsToSay;
         }
 

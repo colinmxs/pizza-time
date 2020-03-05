@@ -21,20 +21,21 @@ namespace PizzaTime.Core.Phones
         public PhoneCall(Order order)
         {
             if (order == null) throw new ArgumentNullException(nameof(order));
-            
+
+            var phoneGreetingResponse = new ThingToSay($"{order.Type}, please.", ThingToSayCategory.PhoneGreetingResponse);
             Caller = new ConversationParticipant(new List<IThingToSay>()
             {
-                new ThingToSay("Delivery, please.", ThingToSayCategory.PhoneGreetingResponse),
-                new ThingToSay("Pickup, please.", ThingToSayCategory.PhoneGreetingResponse),
+                phoneGreetingResponse,
                 new ThingToSay("No", ThingToSayCategory.GenericNegative),
                 new ThingToSay("Yes", ThingToSayCategory.GenericAffirmative),
                 new ThingToSay(order.Customer.PhoneNumber, ThingToSayCategory.PhoneNumberResponse),
                 new ThingToSay(order.Customer.Address, ThingToSayCategory.AddressResponse),
                 GetOrderThingToSay(order)
-            });
+            }, null);
+            var phoneGreeting = new ThingToSay("Pickup? Or delivery?", ThingToSayCategory.PhoneGreeting);
             Player = new ConversationParticipant(new List<IThingToSay>()
             {
-                new ThingToSay("Pickup? Or delivery?", ThingToSayCategory.PhoneGreeting),
+                phoneGreeting,
                 new ThingToSay("Hold please...", ThingToSayCategory.HoldRequest),
                 new ThingToSay("What's your phone number?", ThingToSayCategory.PhoneNumberRequest),
                 new ThingToSay("What's your address?", ThingToSayCategory.AddressRequest),
@@ -42,7 +43,7 @@ namespace PizzaTime.Core.Phones
                 new ThingToSay("I've got 2099293394 for your phone number. Is that correct?", ThingToSayCategory.PhoneNumberVerification),
                 new ThingToSay("I've got 212 Cherry Lane down as your address? Correct?", ThingToSayCategory.AddressVerification),
                 new ThingToSay("I've got 2 large pepperoni pizzas. Anything else?", ThingToSayCategory.OrderVerification)
-            });
+            }, phoneGreeting);
 
             Conversation = new Conversation(new List<IConversationParticipant> { Caller, Player });
         }
