@@ -22,7 +22,7 @@ namespace PizzaTime.ConversationConsole
                 new ThingToSay("I've got 2099293394 for your phone number. Is that correct?", ThingToSayCategory.PhoneNumberVerification),
                 new ThingToSay("I've got 212 Cherry Lane down as your address? Correct?", ThingToSayCategory.AddressVerification),
                 new ThingToSay("I've got 2 large pepperoni pizzas. Anything else?", ThingToSayCategory.OrderVerification)
-            });
+            }, null);
             var participant2 = new ConversationParticipant(new List<IThingToSay>() 
             { 
                 new ThingToSay("Delivery, please.", ThingToSayCategory.PhoneGreetingResponse),
@@ -32,7 +32,7 @@ namespace PizzaTime.ConversationConsole
                 new ThingToSay("2099293394", ThingToSayCategory.PhoneNumberResponse),
                 new ThingToSay("212 Cherry Lane", ThingToSayCategory.AddressResponse),
                 new ThingToSay("I'd like to order two large pepperoni pizzas", ThingToSayCategory.OrderResponse)
-            });
+            }, null);
             var conversation = new Conversation(new List<IConversationParticipant>() 
             {
                 participant1, participant2
