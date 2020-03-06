@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PizzaTimeAwsCdkCognito
+namespace PizzaTime.Aws.Cdk.Cognito
 {
     sealed class Program
     {
         public static void Main(string[] args)
         {
             var app = new App();
-            new PizzaTimeAwsCdkCognitoStack(app, "PizzaTimeAwsCdkCognitoStack");
+            new CognitoStack(app, "PizzaTimeCognitoStack");
             app.Synth();
         }
     }
