@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaTime.Core.Conversations
@@ -8,6 +9,8 @@ namespace PizzaTime.Core.Conversations
     {
         event Action<IThingToSay> SayThing;
         IEnumerable<IConversationParticipant> Participants { get; }
+        bool IsActive { get; }
+
         Task Say(IThingToSay thingToSay, IConversationParticipant participant);
         void AddToConversation(IConversationParticipant participant);
     }
@@ -15,6 +18,8 @@ namespace PizzaTime.Core.Conversations
     {
         private List<IConversationParticipant> _participants = new List<IConversationParticipant>();
         public IEnumerable<IConversationParticipant> Participants => _participants;
+
+        public bool IsActive => Participants.Any(p => p.ThingsToSay.Any());
 
         public Conversation(List<IConversationParticipant> participants)
         {
