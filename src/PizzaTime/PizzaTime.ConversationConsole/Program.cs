@@ -1,6 +1,13 @@
-﻿using PizzaTime.Core.Conversations;
+﻿using CsvHelper;
+using PizzaTime.Core;
+using PizzaTime.Core.Conversations;
+using PizzaTime.Core.Customers;
+using PizzaTime.Core.Orders;
+using PizzaTime.VoiceFileGenerator;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,53 +17,40 @@ namespace PizzaTime.ConversationConsole
     {
         static async Task Main(string[] args)
         {
-            var greeting = new ThingToSay("Pickup? Or delivery?", ThingToSayCategory.PhoneGreeting);
-            //var voiceEngine = new VoiceEngine.App()
-            var participant1 = new ConversationParticipant(new List<IThingToSay>()
+            var customers = await new SeedCustomers
             {
-                greeting,
-                new ThingToSay("Hold please...", ThingToSayCategory.HoldRequest),
-                new ThingToSay("What's your phone number?", ThingToSayCategory.PhoneNumberRequest),
-                new ThingToSay("What's your address?", ThingToSayCategory.AddressRequest),
-                new ThingToSay("What's your order?", ThingToSayCategory.OrderRequest),
-                new ThingToSay("I've got 2099293394 for your phone number. Is that correct?", ThingToSayCategory.PhoneNumberVerification),
-                new ThingToSay("I've got 212 Cherry Lane down as your address? Correct?", ThingToSayCategory.AddressVerification),
-                new ThingToSay("I've got 2 large pepperoni pizzas. Anything else?", ThingToSayCategory.OrderVerification)
-            }, null);
-            var participant2 = new ConversationParticipant(new List<IThingToSay>() 
-            { 
-                new ThingToSay("Delivery, please.", ThingToSayCategory.PhoneGreetingResponse),
-                new ThingToSay("Pickup, please.", ThingToSayCategory.PhoneGreetingResponse),
-                new ThingToSay("No", ThingToSayCategory.GenericNegative),
-                new ThingToSay("Yes", ThingToSayCategory.GenericAffirmative),
-                new ThingToSay("2099293394", ThingToSayCategory.PhoneNumberResponse),
-                new ThingToSay("212 Cherry Lane", ThingToSayCategory.AddressResponse),
-                new ThingToSay("I'd like to order two large pepperoni pizzas", ThingToSayCategory.OrderResponse)
-            }, null);
-            var conversation = new Conversation(new List<IConversationParticipant>() 
+                AmountToSeed = 100
+            }
+            .Seed();
+
+            var orders = await new SeedOrders
             {
-                participant1, participant2
-            });
-            
-            //var tts = participant1.ThingsToSay.Single(t => t.Category == ThingToSayCategory.PhoneGreeting);
-            conversation.SayThing += t => Console.WriteLine(t.Text);
-            //conversation.SayThing += t => 
-            await conversation.Say(greeting, participant1);
-            while (true)
+                AmountToSeed = 1000
+            }
+            .Seed();
+
+            var callService = new PhoneCallService(new CustomerRepository(customers), new OrderRepository(orders));
+            List<MessageBody> messages = new List<MessageBody>();
+
+            for (int i = 0; i < 500; i++)
             {
-                var ftts = participant2.ThingsToSay.First();
-                await conversation.Say(ftts, participant2);
-                Console.WriteLine("...");
-                Console.WriteLine("Speech Options:");
-                var i = 0;
-                foreach (var item in participant1.ThingsToSay)
+                var conversation = callService.GetCall().Conversation;
+                var participant = conversation.Participants.Single(p => ((ConversationParticipant)p).Type == ConversationParticipant.CallerType.Caller);
+                foreach (var thingToSay in participant.SpeechBank)
                 {
-                    Console.WriteLine($"Choice {i}::{item.Category.Name}");
-                    i++;
+                    messages.Add(new MessageBody
+                    {
+                        Input = thingToSay.Text,
+                        Type = thingToSay.Category.Name.ToString(),
+                        Voice = "All"
+                    });
                 }
-                int @int = Convert.ToInt32(Console.ReadLine());
-                ftts = participant1.ThingsToSay.Skip(@int).First();
-                await conversation.Say(ftts, participant1);
+            }
+
+            using (var writer = new StreamWriter("things-to-say.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(messages);
             }
         }
     }
