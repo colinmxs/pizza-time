@@ -134,12 +134,12 @@ GameObject:
   - component: {fileID: 46572415}
   - component: {fileID: 46572414}
   m_Layer: 5
-  m_Name: MenuPage
+  m_Name: Panel (Menu)
   m_TagString: POS Screen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &46572412
 RectTransform:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 112042518}
   - component: {fileID: 112042517}
   m_Layer: 5
-  m_Name: CounterPanel
+  m_Name: Panel (Counter)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 168538464}
   - component: {fileID: 168538463}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button (Keybroad)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 169288361}
   - component: {fileID: 169288360}
   m_Layer: 5
-  m_Name: CounterTop
+  m_Name: Panel (Counter Top)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 203506852}
   - component: {fileID: 203506851}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text (Enter Password:)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '********'
+  m_Text: '*********'
 --- !u!222 &231997409
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -765,7 +765,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531964, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_Name
-      value: AddCustomersButton
+      value: Button (AddCustomers)
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531966, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -860,22 +860,22 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.40007
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -187.845
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 363.15
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 39.67
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -885,7 +885,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -895,7 +895,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 401222465}
   - component: {fileID: 401222464}
   m_Layer: 5
-  m_Name: POS Canvas
+  m_Name: Canvas (POS)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1003,7 +1003,7 @@ GameObject:
   - component: {fileID: 412275217}
   - component: {fileID: 412275216}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: InputField (Password)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 658581151}
   - component: {fileID: 658581150}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button (Telephone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1368,12 +1368,12 @@ GameObject:
   - component: {fileID: 756776085}
   - component: {fileID: 756776084}
   m_Layer: 5
-  m_Name: FrontOfHousePanel
+  m_Name: Panel (Front Of House)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &756776083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1444,7 +1444,7 @@ GameObject:
   - component: {fileID: 782092266}
   - component: {fileID: 782092265}
   m_Layer: 5
-  m_Name: AboutText
+  m_Name: Text (About)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1529,7 +1529,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531964, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_Name
-      value: AddOrderButton
+      value: Button (AddOrder)
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531966, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -1624,22 +1624,22 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.40007
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -108.505
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 363.15
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 39.67
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -1649,7 +1649,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -1659,7 +1659,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 982509039}
   - component: {fileID: 982509038}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: Text (Title)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 1000427409}
   - component: {fileID: 1000427408}
   m_Layer: 5
-  m_Name: SignInPage
+  m_Name: Panel (Sign In)
   m_TagString: POS Screen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1941,7 +1941,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531964, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_Name
-      value: SignOutButton
+      value: Button (Sign Out)
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531966, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2031,22 +2031,22 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.40007
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -227.51498
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 363.15
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 39.67
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2056,7 +2056,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2066,7 +2066,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2165,7 +2165,7 @@ GameObject:
   - component: {fileID: 1159103166}
   - component: {fileID: 1159103165}
   m_Layer: 5
-  m_Name: OutsideBorder
+  m_Name: Image (OutsideBorder)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2238,7 +2238,7 @@ GameObject:
   - component: {fileID: 1332104672}
   - component: {fileID: 1332104671}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: Text (Title)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2318,7 +2318,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531964, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_Name
-      value: CustomersButton
+      value: Button (Customers)
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531966, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2413,22 +2413,22 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.40007
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -148.17499
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 363.15
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 39.67
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2438,7 +2438,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2448,7 +2448,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -2474,7 +2474,7 @@ GameObject:
   - component: {fileID: 1345199162}
   - component: {fileID: 1345199161}
   m_Layer: 5
-  m_Name: Keybroad
+  m_Name: Keyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2650,7 +2650,7 @@ GameObject:
   - component: {fileID: 1479839231}
   - component: {fileID: 1479839233}
   m_Layer: 5
-  m_Name: PointOfSaleScreen
+  m_Name: Panel (POS)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2851,7 +2851,7 @@ GameObject:
   - component: {fileID: 1537692049}
   - component: {fileID: 1537692048}
   m_Layer: 5
-  m_Name: InnerTopBorder
+  m_Name: Image (InnerTopBorder)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2925,7 +2925,7 @@ GameObject:
   - component: {fileID: 1564630833}
   - component: {fileID: 1564630835}
   m_Layer: 5
-  m_Name: ClockText
+  m_Name: Text (Clock)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3020,7 +3020,7 @@ GameObject:
   - component: {fileID: 1734994081}
   - component: {fileID: 1734994080}
   m_Layer: 5
-  m_Name: SignInPanel
+  m_Name: Panel (Password)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3095,7 +3095,7 @@ GameObject:
   - component: {fileID: 1812919019}
   - component: {fileID: 1812919018}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: Text (Title)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3180,12 +3180,12 @@ GameObject:
   - component: {fileID: 1917942541}
   - component: {fileID: 1917942544}
   m_Layer: 5
-  m_Name: OrdersPage
+  m_Name: Panel (Orders)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1917942540
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3358,11 +3358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee95bb73a561eb40affc9113460afee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Seeder: {fileID: 2021467011}
   WithReciever: {fileID: 21300000, guid: 18c34a2389497b64dbf8c3da1441d0a3, type: 3}
   WithoutReciever: {fileID: 21300000, guid: 7669a2a4bcbb6a04283baccce89c4350, type: 3}
   RingClip: {fileID: 8300000, guid: 798da8c29269ff5449ea05188ace3a67, type: 3}
   DialToneClip: {fileID: 8300000, guid: fd17c2d5e84088642a3ecff33db09b7d, type: 3}
-  Seeder: {fileID: 2021467011}
 --- !u!82 &1921893311
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3471,12 +3471,12 @@ GameObject:
   - component: {fileID: 1922360336}
   - component: {fileID: 1922360335}
   m_Layer: 5
-  m_Name: BackOfHousePanel
+  m_Name: Panel (Back Of House)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1922360334
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3547,7 +3547,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531964, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_Name
-      value: OrdersButton
+      value: Button (Orders)
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531966, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -3647,22 +3647,22 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.40007
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -68.835
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 363.15
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 39.67
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -3672,7 +3672,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -3682,7 +3682,7 @@ PrefabInstance:
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741206900856531967, guid: f95b11c7e77ad04458c2ba4ddaff4f62,
         type: 3}
@@ -3753,7 +3753,7 @@ GameObject:
   - component: {fileID: 2113365077}
   - component: {fileID: 2113365080}
   m_Layer: 5
-  m_Name: MenuOptionsPanel
+  m_Name: Panel (Menu Options)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
