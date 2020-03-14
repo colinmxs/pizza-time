@@ -6,6 +6,7 @@ namespace PizzaTime.Core.Orders
     {
         decimal Price { get; }
         string Name { get; }
+        string Description { get; }
         IEnumerable<string> SpecialInstructions { get; }
     }
 }
