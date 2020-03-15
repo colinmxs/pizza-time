@@ -3,6 +3,7 @@
     using PizzaTime.Core.Food.Core;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     public class PizzaOrderItem : IOrderItem
@@ -15,6 +16,7 @@
         }
         public string Name => pizza.Name;
         public decimal Price => pizza.Price;
+        public string Description => $"{pizza.Size.Name.ToLower(CultureInfo.InvariantCulture)} {pizza.Name}";
         public IEnumerable<string> SpecialInstructions
         {
             get
