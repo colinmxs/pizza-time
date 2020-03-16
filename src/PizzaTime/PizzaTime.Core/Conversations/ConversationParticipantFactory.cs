@@ -54,21 +54,19 @@ namespace PizzaTime.Core.Conversations
         private IThingToSay GetOrderThingToSay(Order order)
         {
             var stringBuilder = new StringBuilder();
-
+            stringBuilder.Append("I would like");
             foreach (var item in order.OrderItems)
             {
-                stringBuilder.Append($"A {item.Name} ");
-                if (item.SpecialInstructions.Any())
+                if(item == order.OrderItems.Last())
                 {
-                    stringBuilder.Append("with ");
-
-                    foreach (var instruction in item.SpecialInstructions)
-                    {
-                        stringBuilder.Append($"{instruction}, ");
-                    }
-                    stringBuilder.Append(".");
+                    stringBuilder.Append($" and a {item.Description}.");
+                }
+                else
+                {
+                    stringBuilder.Append($" a {item.Description},");
                 }
             }
+
             return new ThingToSay(stringBuilder.ToString(), ThingToSayCategory.OrderResponse);
         }
     }
