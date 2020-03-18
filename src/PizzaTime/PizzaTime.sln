@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.ConversationConso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTime.SeedMethods", "PizzaTime.SeedMethods\PizzaTime.SeedMethods.csproj", "{670CA0C4-ACD3-40A8-B2D3-AF146696E346}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaTimeAwsCdkCognito", "PizzaTime.Aws.Cdk.Cognito\src\PizzaTimeAwsCdkCognito\PizzaTimeAwsCdkCognito.csproj", "{4E47AD9D-78BA-4DCA-9C59-790EA0642377}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{670CA0C4-ACD3-40A8-B2D3-AF146696E346}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E47AD9D-78BA-4DCA-9C59-790EA0642377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E47AD9D-78BA-4DCA-9C59-790EA0642377}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E47AD9D-78BA-4DCA-9C59-790EA0642377}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E47AD9D-78BA-4DCA-9C59-790EA0642377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
