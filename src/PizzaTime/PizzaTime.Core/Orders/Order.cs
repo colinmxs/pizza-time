@@ -14,6 +14,8 @@
             Delivery = 2
         }
 
+        public Order() { }
+
         public Order(OrderType orderType)
         {
             Type = orderType;

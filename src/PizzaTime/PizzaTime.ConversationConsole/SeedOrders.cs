@@ -33,14 +33,39 @@ namespace PizzaTime.ConversationConsole
 
         private Order Seed(Order.OrderType orderType)
         {
-            var orderSize = _random.Next(5);
             var order = new Order(orderType);
+            var orderDiscriminator = _random.Next(10);
+            
+            // 0 - 6 == common order
+            // 7 - 10 == unique order
+            if(orderDiscriminator >= 7)
+            {
+                return SeedUniqueOrder(order);
+            }
+            else
+            {
+                return SeedCommonOrder(order);
+            }
+        }
+
+        private Order SeedCommonOrder(Order order) 
+        {
+            List<Order> commonOrders = CommonOrderRepository.CommonOrders;
+            var index = _random.Next(commonOrders.Count);
+            var commonOrder = commonOrders[index];
+            order.OrderItems = commonOrder.OrderItems;
+            return order;
+        }
+
+        private Order SeedUniqueOrder(Order order)
+        {
+            var orderSize = _random.Next(5);
+
             var orderItems = new List<IOrderItem>();
 
             for (int i = 0; i < orderSize; i++)
             {
                 var nextPizza = _random.Next(pizzasCount);
-                var nextSize = _random.Next(4);
 
                 Pizza pizza;
                 switch (nextPizza)
@@ -76,6 +101,7 @@ namespace PizzaTime.ConversationConsole
                         pizza = Pizzas.Pepperoni;
                         break;
                 }
+                var nextSize = _random.Next(4);
 
                 switch (nextSize)
                 {

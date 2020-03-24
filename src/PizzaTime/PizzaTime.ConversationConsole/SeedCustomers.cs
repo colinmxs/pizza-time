@@ -11,8 +11,8 @@ namespace PizzaTime.ConversationConsole
         public int AmountToSeed { get; set; }
         private readonly System.Random _random;
         private readonly Generator _generator;
-        private readonly Func<System.Random, string> GenerateZipCode = r => r.Next(10000, 99999).ToString();
-        private readonly Func<System.Random, string> GenerateAreaCode = r => r.Next(0, 999).ToString().PadRight(3, '0');
+        private readonly Func<System.Random, string> GenerateZipCode = r => $"83{r.Next(100, 999).ToString()}";
+        private readonly Func<System.Random, string> GenerateStreetAddressNumber = r => r.Next(0, 999).ToString().PadRight(3, '0');
         private readonly Func<Generator, string> GenerateMaleFirstName = g => { g.SetParts(WordBank.MaleFirstNames); return g.GenerateAsync().Result; };
         private readonly Func<Generator, string> GenerateFemaleFirstName = g => { g.SetParts(WordBank.FirstNames); return g.GenerateAsync().Result; };
         private readonly Func<Generator, string> GenerateLastName = g => { g.SetParts(WordBank.LastNames); return g.GenerateAsync().Result; };
@@ -41,24 +41,24 @@ namespace PizzaTime.ConversationConsole
 
         private Customer SeedFemaleCustomer()
         {
-            var areaCode = GenerateAreaCode(_random);
+            var areaCode = GenerateStreetAddressNumber(_random);
             var firstName = GenerateFemaleFirstName(_generator);
             var lastName = GenerateLastName(_generator);
-            return new Customer(firstName, lastName, $"{GenerateAreaCode(_random)}-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
+            return new Customer(firstName, lastName, $"208-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
             {
-                Address = $"{GenerateAreaCode(_random)} {GenerateStreetName(_generator)}",
+                Address = $"{GenerateStreetAddressNumber(_random)} {GenerateStreetName(_generator)}",
                 ZipCode = GenerateZipCode(_random)
             };
         }
 
         private Customer SeedMaleCustomer()
         {
-            var areaCode = GenerateAreaCode(_random);
+            var areaCode = GenerateStreetAddressNumber(_random);
             var firstName = GenerateMaleFirstName(_generator);
             var lastName = GenerateLastName(_generator);
-            return new Customer(firstName, lastName, $"{GenerateAreaCode(_random)}-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
+            return new Customer(firstName, lastName, $"208-{_random.Next(0, 9999999).ToString().PadRight(7, '0')}")
             {
-                Address = $"{GenerateAreaCode(_random)} {GenerateStreetName(_generator)}",
+                Address = $"{GenerateStreetAddressNumber(_random)} {GenerateStreetName(_generator)}",
                 ZipCode = GenerateZipCode(_random)
             };
         }
