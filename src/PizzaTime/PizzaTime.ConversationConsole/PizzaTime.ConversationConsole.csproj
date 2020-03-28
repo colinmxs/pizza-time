@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PizzaTime.Core\PizzaTime.Core.csproj" />
-    <ProjectReference Include="..\PizzaTime.VoiceEngine\PizzaTime.VoiceEngine.csproj" />
     <ProjectReference Include="..\PizzaTime.VoiceFileGenerator\PizzaTime.VoiceFileGenerator.csproj" />
   </ItemGroup>
 
