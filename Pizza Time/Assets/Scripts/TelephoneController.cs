@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class TelephoneController : MonoBehaviour
 {
     public SeederController Seeder;
+    public PhoneDialogController Dialog;
     public Sprite WithReciever;
     public Sprite WithoutReciever;
     public AudioClip RingClip;
@@ -56,6 +57,7 @@ public class TelephoneController : MonoBehaviour
         switch (_telephone.Status)
         {
             case PhoneLine.State.OnHook:
+                Dialog.gameObject.SetActive(true);
                 _image.sprite = WithReciever;
                 _audioSource.Stop();
                 break;
@@ -71,37 +73,28 @@ public class TelephoneController : MonoBehaviour
             case PhoneLine.State.Connected:
                 _audioSource.Stop();
                 _image.sprite = WithoutReciever;
-                _telephone.Call.Conversation.SayThing += Conversation_SayThing;
-                var greeting = _telephone.Call.Caller.ThingsToSay.Where(tts => tts.Category == ThingToSayCategory.PhoneGreeting).FirstOrDefault();
-                _telephone.Call.Conversation.Say(greeting, _telephone.Call.Caller);                
+                Dialog.gameObject.SetActive(true);
+                Dialog.StartDialog(_telephone.Call);
                 break;
             case PhoneLine.State.Holding:
                 break;
         }
     }
 
-    //private IEnumerator Converse(IConversation conversation)
-    //{
-    //    while (true)
-    //    {
-    //        var ftts = participant2.ThingsToSay.First();
-    //        await conversation.Say(ftts, participant2);
-    //        Console.WriteLine("...");
-    //        Console.WriteLine("Speech Options:");
-    //        var i = 0;
-    //        foreach (var item in participant1.ThingsToSay)
-    //        {
-    //            Console.WriteLine($"Choice {i}::{item.Category.Name}");
-    //            i++;
-    //        }
-    //        int @int = Convert.ToInt32(Console.ReadLine());
-    //        ftts = participant1.ThingsToSay.Skip(@int).First();
-    //        await conversation.Say(ftts, participant1);
-    //    }
-    //}
-
-    private void Conversation_SayThing(PizzaTime.Core.Conversations.IThingToSay obj)
-    {
-        
-    }
+        //{
+        //    var ftts = _telephone.Call.Caller.ThingsToSay.First();
+        //    await conversation.Say(ftts, _telephone.Call.Caller);
+        //    Console.WriteLine("...");
+        //    Console.WriteLine("Speech Options:");
+        //    var i = 0;
+        //    foreach (var item in _telephone.Call.Player.ThingsToSay)
+        //    {
+        //        Console.WriteLine($"Choice {i}::{item.Category.Name}");
+        //        i++;
+        //    }
+        //    int @int = Convert.ToInt32(Console.ReadLine());
+        //    ftts = _telephone.Call.Player.ThingsToSay.Skip(@int).First();
+        //    await conversation.Say(ftts, _telephone.Call.Player);
+        //}
+    
 }
