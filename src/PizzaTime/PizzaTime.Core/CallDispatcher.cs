@@ -6,7 +6,7 @@ namespace PizzaTime.Core
 {
     public class CallDispatcher : IUpdate
     {
-        public double ChanceModifier { get; set; } = 0.51f;
+        public double ChanceModifier { get; set; } = 0.001f;
         private readonly Random _random = new Random();
         private readonly IPhoneCallService _callService;
         private readonly IPhoneSystem _phoneSystem;

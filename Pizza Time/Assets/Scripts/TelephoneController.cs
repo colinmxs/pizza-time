@@ -1,8 +1,6 @@
 ﻿using PizzaTime.Core;
-using PizzaTime.Core.Conversations;
 using PizzaTime.Core.Orders;
 using PizzaTime.Core.Phones;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +30,8 @@ public class TelephoneController : MonoBehaviour
         var phoneSystem = new PhoneSystem(1);
         _telephone = phoneSystem.PhoneLines.First();
         var callService = new PhoneCallService(Seeder.CustomerRepository, new OrderRepository(Seeder.Orders));
-        new CallDispatcher(callService, phoneSystem);
+        var dispatcher = new CallDispatcher(callService, phoneSystem);
+        dispatcher.ChanceModifier = .0001f;
         _knownState = _telephone.Status;
     }
 
@@ -57,11 +56,12 @@ public class TelephoneController : MonoBehaviour
         switch (_telephone.Status)
         {
             case PhoneLine.State.OnHook:
-                Dialog.gameObject.SetActive(true);
+                Dialog.gameObject.SetActive(false);
                 _image.sprite = WithReciever;
                 _audioSource.Stop();
                 break;
             case PhoneLine.State.OffHook:
+                Dialog.gameObject.SetActive(false);
                 _image.sprite = WithoutReciever;
                 _audioSource.clip = DialToneClip;
                 _audioSource.Play();
