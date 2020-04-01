@@ -10,6 +10,7 @@ using PizzaTime.Core.PointOfSale.Requests;
 using UnityEngine.Events;
 using Screen = PizzaTime.Core.PointOfSale.Screen;
 using System.Linq;
+using PizzaTime.Core.Customers;
 
 public partial class PointOfSaleScreenController : MonoBehaviour
 {
