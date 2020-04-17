@@ -1,6 +1,4 @@
-﻿using PizzaTime.Aws.Sdk.Cognito;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +6,6 @@ public class SignInController : MonoBehaviour
 {
     public InputField UsernameField;
     public InputField PasswordField;
-
-    private readonly AuthService _authService = new AuthService();
 
     public void SignIn() 
     {
@@ -24,12 +20,9 @@ public class SignInController : MonoBehaviour
 
     IEnumerator SignIn(string un, string pw)
     {
-        _authService.Username = un;
-        _authService.Password = pw;
         string token = "";
 
         var thread = new System.Threading.Thread(() => {
-            token = _authService.SignIn().Result;
         });
         
         thread.Start();
@@ -51,13 +44,10 @@ public class SignInController : MonoBehaviour
 
     IEnumerator Register(string un, string pw)
     {
-        _authService.Username = un;
-        _authService.Password = pw;       
 
         string token = "";
 
         var thread = new System.Threading.Thread(() => {
-            token = _authService.Register().Result;
         });
 
         thread.Start();
