@@ -1,6 +1,7 @@
 ﻿using PizzaTime.Core.Customers;
 using PizzaTime.Core.Food.Core;
 using PizzaTime.Core.Orders;
+using PizzaTime.Core.PointOfSale.Requests;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,8 +29,20 @@ public class OrdersPageController : MonoBehaviour
 
     public void Redraw()
     {
-        var orders = screenController.GetOrders(Page).ToList();
+        var orders = GetOrders(Page);
         Orders = orders.Select(o => new OrdersScreenViewModel(o)).ToList();
+    }
+
+
+    public IEnumerable<Order> GetOrders(int page)
+    {
+        var getOrdersRequest = new GetOrdersRequest
+        {
+            Page = 0
+        };
+        var result = screenController.pos.GetOrders(getOrdersRequest);
+        var orders = result.Orders.ToList();
+        return orders;
     }
 
     public class OrdersScreenViewModel

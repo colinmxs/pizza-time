@@ -12,5 +12,6 @@ namespace PizzaTime.Core.PointOfSale.Responses
         }
 
         public Customer Customer { get; internal set; }
+        public string Remarks { get; internal set; }
     }
 }

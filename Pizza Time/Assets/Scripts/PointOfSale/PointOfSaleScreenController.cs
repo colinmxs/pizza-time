@@ -51,15 +51,24 @@ public partial class PointOfSaleScreenController : MonoBehaviour
         }));
         views = GetComponentsInChildren<IPointOfSaleView>();
 
-        pos = new PointOfSaleMachine(cashRegi, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
+        pos = new PointOfSaleMachine("admin", cashRegi, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
         
         if (views != null)
         {
-            TryActivateScreen(Screen.SignIn);
+            TryActivateScreen(views.First().Screen);
         }
     }
 
-    private void TryActivateScreen(Screen screenToActivate)
+    public void TryActivateScreen(string screenToActivate)
+    {
+        if (views != null)
+        {
+            var screen = views.SingleOrDefault(v => v.Screen.ToString() == screenToActivate);
+            if(screen != null) TryActivateScreen(screen.Screen);
+        }
+    }
+
+    public void TryActivateScreen(Screen screenToActivate)
     {
         if (views != null)
         {
@@ -73,38 +82,11 @@ public partial class PointOfSaleScreenController : MonoBehaviour
     public void KeyboardClack()
     {
         OnKeyboardClack.Invoke();
-    }
-
-    public void SelectMenuOption(string option)
-    {
-        var screen = views.SingleOrDefault(v => v.Screen.ToString() == option);
-        if (screen != null) TryActivateScreen(screen.Screen);
-    }
+    }   
 
     public void SignOut()
     {
         pos.SignOut();
         TryActivateScreen(Screen.SignIn);
-    }
-
-    public IEnumerable<Order> GetOrders(int page)
-    {
-        var getOrdersRequest = new GetOrdersRequest
-        {
-            Page = 0
-        };
-        var result = pos.GetOrders(getOrdersRequest);
-        var orders = result.Orders.ToList();
-        return orders;
-    }
-
-    public void SignIn(string password)
-    {
-        var request = new SignInRequest
-        {
-            Passcode = password
-        };
-        var result = pos.SignIn(request);
-        if (result.Success) TryActivateScreen(Screen.Menu);
     }
 }

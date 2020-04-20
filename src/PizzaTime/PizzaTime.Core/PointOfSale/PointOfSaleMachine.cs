@@ -7,19 +7,22 @@
     using PizzaTime.Core.PointOfSale.Responses;
     using PizzaTime.Core.Printers;
     using System;
+    using System.Collections.Generic;
 
     public class PointOfSaleMachine : IPointOfSaleMachine
     {
-        private const string _passcode = "admin";
         private bool _signedIn = false;
 
+        private readonly Dictionary<string, string> _notes = new Dictionary<string, string>();
+        private readonly string _passcode;
         private readonly ICashRegister _cashRegister;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IPrinter _printer;
 
-        public PointOfSaleMachine(ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
+        public PointOfSaleMachine(string passCode, ICashRegister cashRegister, ICustomerRepository customerRepository, IOrderRepository orderRepository, IPrinter printer)
         {
+            _passcode = passCode;
             _cashRegister = cashRegister;
             _customerRepository = customerRepository;
             _orderRepository = orderRepository;
@@ -41,6 +44,7 @@
                 }
 
                 _customerRepository.Add(addCustomerRequest.Customer);
+                _notes[addCustomerRequest.Customer.Id.ToString()] = addCustomerRequest.Remarks;
 
                 success = true;
             }
@@ -73,7 +77,8 @@
             var customer = _customerRepository.GetByPhoneNumber(lookupCustomerRequest.PhoneNumber);
             return new LookupCustomerResponse(true)
             {
-                Customer = customer
+                Customer = customer,
+                Remarks = _notes[customer.Id.ToString()]
             };
         }
 
