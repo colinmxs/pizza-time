@@ -39,5 +39,10 @@
         {
             _customers.Remove(customer);
         }
+
+        public IEnumerable<Customer> Search(Func<Customer, bool> search)
+        {
+            return _customers.Where(search);
+        }
     }
 }

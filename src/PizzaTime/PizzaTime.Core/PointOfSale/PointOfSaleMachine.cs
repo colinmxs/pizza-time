@@ -8,6 +8,7 @@
     using PizzaTime.Core.Printers;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class PointOfSaleMachine : IPointOfSaleMachine
     {
@@ -74,11 +75,46 @@
 
         public LookupCustomerResponse LookupCustomer(LookupCustomerRequest lookupCustomerRequest)
         {
-            var customer = _customerRepository.GetByPhoneNumber(lookupCustomerRequest.PhoneNumber);
+            IEnumerable<(Customer, string)> customers = new List<(Customer, string)>();
+            switch (lookupCustomerRequest.LookupProperty)
+            {
+                case LookupProperty.Name:
+                    customers = _customerRepository.Search(c => c.FirstName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()) || c.LastName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()))
+                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    break;
+                case LookupProperty.Phone:
+                    customers = _customerRepository.Search(c => c.PhoneNumber.Contains(lookupCustomerRequest.SearchValue))
+                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    break;
+                case LookupProperty.Address:
+                    customers = _customerRepository.Search(c => c.Address.Contains(lookupCustomerRequest.SearchValue))
+                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    break;
+                case LookupProperty.City:
+                    customers = _customerRepository.Search(c => c.ZipCode.Contains(lookupCustomerRequest.SearchValue))
+                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    break;
+                case LookupProperty.Remarks:
+                    var tempCustomers = new List<(Customer, string)>();
+                    foreach (var note in _notes)
+                    {
+                        if (note.Value.Contains(lookupCustomerRequest.SearchValue))
+                        {
+                            var key = note.Key;
+                            tempCustomers.AddRange(_customerRepository.Search(c => c.Id.ToString() == key)
+                                .Select(c => (c, _notes[c.Id.ToString()])));
+                        }
+                    }
+                    customers = tempCustomers;
+                    break;
+                default:
+                    customers = new List<(Customer, string)>(0);
+                    break;
+            }
+            
             return new LookupCustomerResponse(true)
             {
-                Customer = customer,
-                Remarks = _notes[customer.Id.ToString()]
+                Customers = customers
             };
         }
 

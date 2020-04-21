@@ -2,6 +2,16 @@
 {
     public class LookupCustomerRequest
     {
-        public string PhoneNumber { get; set; }
+        public LookupProperty LookupProperty {get;set;}
+        public string SearchValue { get; set; }
+    }
+
+    public enum LookupProperty
+    {
+        Name,
+        Phone,
+        Address,
+        City,
+        Remarks
     }
 }

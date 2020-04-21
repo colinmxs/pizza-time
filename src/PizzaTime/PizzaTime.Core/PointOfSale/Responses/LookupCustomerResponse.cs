@@ -1,4 +1,5 @@
 ﻿using PizzaTime.Core.Customers;
+using System.Collections.Generic;
 
 namespace PizzaTime.Core.PointOfSale.Responses
 {
@@ -11,7 +12,6 @@ namespace PizzaTime.Core.PointOfSale.Responses
             Success = success;
         }
 
-        public Customer Customer { get; internal set; }
-        public string Remarks { get; internal set; }
+        public IEnumerable<(Customer, string)> Customers { get; internal set; }        
     }
 }

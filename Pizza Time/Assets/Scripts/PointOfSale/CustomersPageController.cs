@@ -1,7 +1,5 @@
 ﻿using PizzaTime.Core.Customers;
-using PizzaTime.Core.PointOfSale;
 using PizzaTime.Core.PointOfSale.Requests;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
