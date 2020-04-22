@@ -73,48 +73,52 @@
             }
         }
 
+        private IEnumerable<(Customer, string)> AttachNotes(IEnumerable<Customer> customers)
+        {
+            return customers.Select(c =>
+            {
+                var valueExists = _notes.TryGetValue(c.Id.ToString(), out string note);
+                return (c, valueExists ? note : "");
+            });
+        }
+
         public LookupCustomerResponse LookupCustomer(LookupCustomerRequest lookupCustomerRequest)
         {
-            IEnumerable<(Customer, string)> customers = new List<(Customer, string)>();
+            IEnumerable<Customer> customers = new List<Customer>();
             switch (lookupCustomerRequest.LookupProperty)
             {
                 case LookupProperty.Name:
-                    customers = _customerRepository.Search(c => c.FirstName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()) || c.LastName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()))
-                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    customers = _customerRepository.Search(c => c.FirstName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()) || c.LastName.ToUpperInvariant().Contains(lookupCustomerRequest.SearchValue.ToUpperInvariant()));
                     break;
                 case LookupProperty.Phone:
-                    customers = _customerRepository.Search(c => c.PhoneNumber.Contains(lookupCustomerRequest.SearchValue))
-                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    customers = _customerRepository.Search(c => c.PhoneNumber.Contains(lookupCustomerRequest.SearchValue));
                     break;
                 case LookupProperty.Address:
-                    customers = _customerRepository.Search(c => c.Address.Contains(lookupCustomerRequest.SearchValue))
-                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    customers = _customerRepository.Search(c => c.Address.Contains(lookupCustomerRequest.SearchValue));
                     break;
                 case LookupProperty.City:
-                    customers = _customerRepository.Search(c => c.ZipCode.Contains(lookupCustomerRequest.SearchValue))
-                        .Select(c => (c, _notes[c.Id.ToString()]));
+                    customers = _customerRepository.Search(c => c.ZipCode.Contains(lookupCustomerRequest.SearchValue));
                     break;
                 case LookupProperty.Remarks:
-                    var tempCustomers = new List<(Customer, string)>();
+                    var tempCustomers = new List<Customer>();
                     foreach (var note in _notes)
                     {
                         if (note.Value.Contains(lookupCustomerRequest.SearchValue))
                         {
                             var key = note.Key;
-                            tempCustomers.AddRange(_customerRepository.Search(c => c.Id.ToString() == key)
-                                .Select(c => (c, _notes[c.Id.ToString()])));
+                            tempCustomers.AddRange(_customerRepository.Search(c => c.Id.ToString() == key));
                         }
                     }
                     customers = tempCustomers;
                     break;
                 default:
-                    customers = new List<(Customer, string)>(0);
+                    customers = new List<Customer>(0);
                     break;
             }
             
             return new LookupCustomerResponse(true)
             {
-                Customers = customers
+                Customers = AttachNotes(customers)
             };
         }
 
