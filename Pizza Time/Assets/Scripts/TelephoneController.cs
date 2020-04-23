@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TelephoneController : MonoBehaviour
 {
-    public SeederController Seeder;
+    public Seeder Seeder;
     public PhoneDialogController Dialog;
     public Sprite WithReciever;
     public Sprite WithoutReciever;

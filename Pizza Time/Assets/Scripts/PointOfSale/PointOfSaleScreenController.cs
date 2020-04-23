@@ -6,22 +6,20 @@ using PizzaTime.Core.PointOfSale.Interfaces;
 using PizzaTime.Core.Orders;
 using PizzaTime.Core.Printers;
 using PizzaTime.Core.PaymentOptions;
-using PizzaTime.Core.PointOfSale.Requests;
 using UnityEngine.Events;
 using Screen = PizzaTime.Core.PointOfSale.Screen;
 using System.Linq;
-using PizzaTime.Core.Customers;
 
-public partial class PointOfSaleScreenController : MonoBehaviour
+public class PointOfSaleScreenController : MonoBehaviour
 {
     public IPointOfSaleMachine pos;
     public UnityEvent OnKeyboardClack;
-    public SeederController Seeder;
 
     IEnumerable<IPointOfSaleView> views;
-    private void Start()
+
+    private void Awake()
     {
-        var cashRegi = new CashRegister(new CashDrawer(new List<DollarBill> 
+        var cashRegi = new CashRegister(new CashDrawer(new List<DollarBill>
         {
             DollarBill.Twenty,
             DollarBill.Twenty,
@@ -49,9 +47,12 @@ public partial class PointOfSaleScreenController : MonoBehaviour
             DollarBill.One,
             DollarBill.One
         }));
-        views = GetComponentsInChildren<IPointOfSaleView>();
-
         pos = new PointOfSaleMachine("admin", cashRegi, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
+    }
+
+    private void Start()
+    {        
+        views = GetComponentsInChildren<IPointOfSaleView>();        
         
         if (views != null)
         {
