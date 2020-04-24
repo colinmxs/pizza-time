@@ -1,12 +1,17 @@
-﻿using PizzaTime.Core.PointOfSale.Requests;
+﻿using PizzaTime.Core.PointOfSale;
+using PizzaTime.Core.PointOfSale.Requests;
 using UnityEngine;
 
 namespace Assets.Scripts.PointOfSale
 {
     class SignInScreenController : MonoBehaviour
     {
-        public PointOfSaleScreenController screenController;
+        IPointOfSaleMachine pos;
 
+        private void Start()
+        {
+            pos = PointOfSaleMachineController.Instance.POS;
+        }
 
         public void SignIn(string password)
         {
@@ -14,8 +19,8 @@ namespace Assets.Scripts.PointOfSale
             {
                 Passcode = password
             };
-            var result = screenController.pos.SignIn(request);
-            if (result.Success) screenController.TryActivateScreen("Menu");
+            var result = pos.SignIn(request);
+            //if (result.Success) screenController.TryActivateScreen("Menu");
         }
     }
 }

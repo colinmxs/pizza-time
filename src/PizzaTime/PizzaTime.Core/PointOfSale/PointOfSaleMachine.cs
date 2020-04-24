@@ -30,31 +30,6 @@
             _printer = printer;            
         }
 
-        public AddOrUpdateCustomerResponse AddOrUpdateCustomer(AddOrUpdateCustomerRequest addCustomerRequest)
-        {
-            bool success = false;
-
-            if (!string.IsNullOrEmpty(addCustomerRequest.Customer.PhoneNumber)
-                && !string.IsNullOrEmpty(addCustomerRequest.Customer.FirstName)
-                && !string.IsNullOrEmpty(addCustomerRequest.Customer.LastName))
-            {
-                var customer = _customerRepository.GetById(addCustomerRequest.Customer.Id);
-                if (customer != null)
-                {
-                    _customerRepository.Remove(customer);
-                }
-
-                _customerRepository.Add(addCustomerRequest.Customer);
-                _notes[addCustomerRequest.Customer.Id.ToString()] = addCustomerRequest.Remarks;
-
-                success = true;
-            }
-
-            return new AddOrUpdateCustomerResponse(success)
-            {
-                Customer = addCustomerRequest.Customer
-            };
-        }
 
         public EjectCashDrawerResponse EjectCashDrawer(EjectCashDrawerRequest ejectCashRegisterRequest)
         {
@@ -150,14 +125,7 @@
 
             return response;
         }
-
-        public SignInResponse SignIn(SignInRequest signInRequest)
-        {
-            if (signInRequest == null) throw new ArgumentNullException(nameof(signInRequest));
-            _signedIn = signInRequest.Passcode == _passcode;
-            return new SignInResponse(_signedIn);
-        }
-
+        
         public void SignOut()
         {
             _signedIn = false;

@@ -29,8 +29,7 @@ public class CustomerResultsController : MonoBehaviour
 
     private void Start()
     {
-        var posController = GetComponentInParent<PointOfSaleScreenController>();
-        pos = posController.pos;
+        pos = PointOfSaleMachineController.Instance.POS;
     }
 
     public void DrawResults(int page)

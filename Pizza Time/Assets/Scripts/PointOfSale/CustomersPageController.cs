@@ -1,4 +1,5 @@
 ﻿using PizzaTime.Core.Customers;
+using PizzaTime.Core.PointOfSale;
 using PizzaTime.Core.PointOfSale.Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public class CustomersPageController : MonoBehaviour
 {
-    public PointOfSaleScreenController screenController;
+    public PointOfSaleController screenController;
     public InputField FirstName;
     public InputField LastName;
     public InputField Phone;
@@ -15,6 +16,7 @@ public class CustomersPageController : MonoBehaviour
     public InputField Remarks;
 
     CanvasGroup canvasGroup;
+    IPointOfSaleMachine pos;
 
     public void SaveCustomer()
     {
@@ -36,7 +38,7 @@ public class CustomersPageController : MonoBehaviour
             Remarks = remarks
         };
 
-        var result = screenController.pos.AddOrUpdateCustomer(addCustomer);
+        var result = pos.AddOrUpdateCustomer(addCustomer);
         if (result.Success)
             screenController.TryActivateScreen(PizzaTime.Core.PointOfSale.Screen.Menu);
     }
@@ -57,8 +59,13 @@ public class CustomersPageController : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();        
     }
 
+    private void Start()
+    {
+        pos = PointOfSaleMachineController.Instance.POS;
+    }
+
     private void Update()
     {
-        if (canvasGroup.interactable && Input.GetKeyDown(KeyCode.F11)) screenController.SignOut();
+        //if (canvasGroup.interactable && Input.GetKeyDown(KeyCode.F11)) screenController.SignOut();
     }
 }

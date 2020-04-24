@@ -12,9 +12,8 @@ public class CustomerLookupController : MonoBehaviour
     IPointOfSaleMachine pos;
 
     private void Start()
-    {
-        var posController = GetComponentInParent<PointOfSaleScreenController>();
-        pos = posController.pos;
+    {        
+        pos = PointOfSaleMachineController.Instance.POS;
     }
 
     public void Search()

@@ -4,7 +4,7 @@ namespace Assets.Scripts.PointOfSale
 {
     public class MenuViewController : MonoBehaviour
     {
-        public PointOfSaleScreenController screenController;
+        public PointOfSaleController screenController;
 
         public void SelectMenuOption(string option)
         {

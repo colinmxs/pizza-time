@@ -1,6 +1,7 @@
 ﻿using PizzaTime.Core.Customers;
 using PizzaTime.Core.Food.Core;
 using PizzaTime.Core.Orders;
+using PizzaTime.Core.PointOfSale;
 using PizzaTime.Core.PointOfSale.Requests;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public class OrdersPageController : MonoBehaviour
 {
-    public PointOfSaleScreenController screenController;
+    IPointOfSaleMachine pos;
     public RectTransform content;
     public GameObject orderButtonPrefab;
     public int Page = 0;
@@ -22,10 +23,15 @@ public class OrdersPageController : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private void Update()
+    private void Start()
     {
-        if (canvasGroup.interactable && Input.GetKeyDown(KeyCode.F11)) screenController.SignOut();
+        pos = PointOfSaleMachineController.Instance.POS;
     }
+
+    //private void Update()
+    //{
+    //    if (canvasGroup.interactable && Input.GetKeyDown(KeyCode.F11)) screenController.SignOut();
+    //}
 
     public void Redraw()
     {
@@ -40,7 +46,7 @@ public class OrdersPageController : MonoBehaviour
         {
             Page = 0
         };
-        var result = screenController.pos.GetOrders(getOrdersRequest);
+        var result = pos.GetOrders(getOrdersRequest);
         var orders = result.Orders.ToList();
         return orders;
     }
