@@ -1,11 +1,10 @@
-﻿using PizzaTime.Core.PointOfSale.Interfaces;
+﻿using PizzaTime.Core.PointOfSaleMachinev2;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using Screen = PizzaTime.Core.PointOfSale.Screen;
+using Screen = PizzaTime.Core.PointOfSaleMachinev2.Screen;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
+public class PointOfSaleView : MonoBehaviour, IView
 {
     public UnityEvent OnActivate;
     public Screen screen;
@@ -16,10 +15,6 @@ public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
             return screen;
         } 
     }
-    public bool Active 
-    {
-        get; set;
-    }
 
     CanvasGroup canvasGroup;
 
@@ -28,18 +23,17 @@ public class PointOfSaleView : MonoBehaviour, IPointOfSaleView
         canvasGroup = GetComponent<CanvasGroup>();
     }   
 
-    public void Update()
+    public void Activate()
     {
-        if(!canvasGroup.interactable && Active)
-        {
-            canvasGroup.interactable = true;
-            canvasGroup.alpha = 1;
-            OnActivate.Invoke();
-        }
-        else if(canvasGroup.interactable && !Active)
-        {
-            canvasGroup.interactable = false;
-            canvasGroup.alpha = 0;
-        }
+        Debug.Log("Activate");
+        canvasGroup.interactable = true;
+        canvasGroup.alpha = 1;
+        OnActivate.Invoke();
+    }
+
+    public void Deactivate()
+    {
+        canvasGroup.interactable = false;
+        canvasGroup.alpha = 0;
     }
 }

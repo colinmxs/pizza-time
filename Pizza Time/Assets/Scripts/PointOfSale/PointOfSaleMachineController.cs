@@ -2,15 +2,16 @@
 using PizzaTime.Core.Orders;
 using PizzaTime.Core.PaymentOptions;
 using PizzaTime.Core.PointOfSale;
+using PizzaTime.Core.PointOfSaleMachinev2;
 using PizzaTime.Core.Printers;
 using System.Collections.Generic;
 
 public class PointOfSaleMachineController : Singleton<PointOfSaleMachineController>
 {
-    public IPointOfSaleMachine POS { get; private set; }
+    public PointOfSaleMachine POS { get; private set; }
     = Build();
 
-    private static IPointOfSaleMachine Build()
+    private static PointOfSaleMachine Build()
     {
         var cashRegister = new CashRegister(new CashDrawer(new List<DollarBill>
         {
@@ -40,6 +41,7 @@ public class PointOfSaleMachineController : Singleton<PointOfSaleMachineControll
             DollarBill.One,
             DollarBill.One
         }));
-        return new PointOfSaleMachine("admin", cashRegister, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
-    }    
+        //return new PointOfSaleMachine("admin", cashRegister, Seeder.CustomerRepository, new OrderRepository(new List<Order>()), new Printer());
+        return new PointOfSaleMachine(Seeder.CustomerRepository, new Dictionary<string, string>());
+    }
 }

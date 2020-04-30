@@ -1,5 +1,4 @@
 ﻿using PizzaTime.Core.Customers;
-using PizzaTime.Core.PointOfSale;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +8,6 @@ public class CustomerResultsController : MonoBehaviour
 {
     public CustomerDetailsController CustomerDetails;
     public IEnumerable<(Customer, string)> SearchResults { get; set; }
-    public IPointOfSaleMachine pos;
     public GameObject ResultButtonPrefab;
     public List<Button> ResultButtons;
     public VerticalLayoutGroup ResultsPanel;
@@ -25,11 +23,6 @@ public class CustomerResultsController : MonoBehaviour
             button.gameObject.SetActive(false);
             ResultButtons.Add(button);
         }
-    }
-
-    private void Start()
-    {
-        pos = PointOfSaleMachineController.Instance.POS;
     }
 
     public void DrawResults(int page)
@@ -79,8 +72,8 @@ public class CustomerResultsController : MonoBehaviour
     private void Update()
     {
         if (!ResultButtons.Any(b => b.isActiveAndEnabled) || !isFocused) return;
-        
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (Page > 1) Page--;
 
@@ -88,8 +81,8 @@ public class CustomerResultsController : MonoBehaviour
             DrawResults(Page);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
-        {            
-            if (Page < SearchResults.Count()/PageSize) Page++;
+        {
+            if (Page < SearchResults.Count() / PageSize) Page++;
             Debug.Log(Page);
             DrawResults(Page);
         }

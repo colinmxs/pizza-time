@@ -1,5 +1,4 @@
-﻿using PizzaTime.Core.PointOfSale;
-using PizzaTime.Core.PointOfSale.Requests;
+﻿using PizzaTime.Core.PointOfSaleMachinev2.Modules.LookupCustomers;
 using System;
 using UnityEngine;
 
@@ -8,12 +7,12 @@ public class CustomerLookupController : MonoBehaviour
     public CustomerResultsController ResultsComponent;
     public string SearchValue { get; set; }
 
-    LookupProperty LookupProperty;
-    IPointOfSaleMachine pos;
+    private LookupProperty LookupProperty;
+    private LookupCustomersModule _module;
 
     private void Start()
-    {        
-        pos = PointOfSaleMachineController.Instance.POS;
+    {
+        _module = GetComponentInParent<CustomersPanelController>().Module;        
     }
 
     public void Search()
@@ -23,7 +22,7 @@ public class CustomerLookupController : MonoBehaviour
             LookupProperty = LookupProperty,
             SearchValue = SearchValue
         };
-        var result = pos.LookupCustomer(request);
+        var result = _module.Handle(request);
         if (result.Success)
         {
             ResultsComponent.SearchResults = result.Customers;

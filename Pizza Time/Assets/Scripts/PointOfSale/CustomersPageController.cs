@@ -1,13 +1,13 @@
 ﻿using PizzaTime.Core.Customers;
-using PizzaTime.Core.PointOfSale;
-using PizzaTime.Core.PointOfSale.Requests;
+using PizzaTime.Core.PointOfSaleMachinev2.Modules.AddOrUpdateCustomer;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(PointOfSaleView))]
 public class CustomersPageController : MonoBehaviour
 {
-    public PointOfSaleController screenController;
+    private AddOrUpdateCustomerModule _module;
+    
     public InputField FirstName;
     public InputField LastName;
     public InputField Phone;
@@ -15,10 +15,7 @@ public class CustomersPageController : MonoBehaviour
     public InputField City;
     public InputField Remarks;
 
-    CanvasGroup canvasGroup;
-    IPointOfSaleMachine pos;
-
-    public void SaveCustomer()
+    public void SaveCustomer(bool addOrder = false)
     {
         string firstName = FirstName.text;
         var lastName = LastName.text;
@@ -29,43 +26,34 @@ public class CustomersPageController : MonoBehaviour
 
         var customer = new Customer(firstName, lastName, phone)
         {
-            Address = address,            
+            Address = address,
             ZipCode = zip
         };
         var addCustomer = new AddOrUpdateCustomerRequest
         {
             Customer = customer,
-            Remarks = remarks
+            Remarks = remarks,
+            AddOrder = addOrder
         };
 
-        var result = pos.AddOrUpdateCustomer(addCustomer);
-        if (result.Success)
-            screenController.TryActivateScreen(PizzaTime.Core.PointOfSale.Screen.Menu);
+        _ = _module.Handle(addCustomer);        
     }
 
-    public void Cancel() 
+    public void Cancel()
     {
-        screenController.TryActivateScreen(PizzaTime.Core.PointOfSale.Screen.Menu);
+        _module.Cancel();
     }
 
     public void AddOrder()
     {
-        SaveCustomer();
-        screenController.TryActivateScreen(PizzaTime.Core.PointOfSale.Screen.AddOrder);
-    }
-
-    private void Awake()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();        
+        SaveCustomer(true);
     }
 
     private void Start()
-    {
-        pos = PointOfSaleMachineController.Instance.POS;
-    }
-
-    private void Update()
-    {
-        //if (canvasGroup.interactable && Input.GetKeyDown(KeyCode.F11)) screenController.SignOut();
+    {        
+        _module = new AddOrUpdateCustomerModule(
+            new AddOrUpdateCustomerModuleConfiguration(),
+            PointOfSaleMachineController.Instance.POS,
+            GetComponent<PointOfSaleView>());
     }
 }
