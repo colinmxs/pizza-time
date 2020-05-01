@@ -7,14 +7,15 @@ public class SignInPanelController : MonoBehaviour
     private SignInModule _module;
 
     private void Start()
-    {       
+    {
+        var view = GetComponent<PointOfSaleView>();
         _module = new SignInModule(
             new SignInModuleConfiguration
             {
                 Passcode = "admin"
             },
             PointOfSaleMachineController.Instance.POS, 
-            GetComponent<PointOfSaleView>());
+            view);
     }
 
     public void SignIn(string password)

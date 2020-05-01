@@ -16,24 +16,36 @@ public class PointOfSaleView : MonoBehaviour, IView
         } 
     }
 
-    CanvasGroup canvasGroup;
+    public bool IsActive { get; set; } = false;
+
+    public CanvasGroup CanvasGroup { get; private set; }
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-    }   
+        CanvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Update()
+    {
+        if(IsActive && !CanvasGroup.interactable)
+        {
+            Activate();
+        }
+    }
 
     public void Activate()
     {
+        IsActive = true;
         Debug.Log("Activate");
-        canvasGroup.interactable = true;
-        canvasGroup.alpha = 1;
+        CanvasGroup.interactable = true;
+        CanvasGroup.alpha = 1;
         OnActivate.Invoke();
     }
 
     public void Deactivate()
     {
-        canvasGroup.interactable = false;
-        canvasGroup.alpha = 0;
+        IsActive = false;
+        CanvasGroup.interactable = false;
+        CanvasGroup.alpha = 0;
     }
 }

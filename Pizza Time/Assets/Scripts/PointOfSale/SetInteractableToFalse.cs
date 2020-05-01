@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SetInteractableToFalse : MonoBehaviour
 {
-    IEnumerable<CanvasGroup> canvasGroups;
+    IEnumerable<PointOfSaleView> views;    
 
     private void Start()
     {
-        canvasGroups = GetComponentsInChildren<CanvasGroup>();
+        views = GetComponentsInChildren<PointOfSaleView>();
+        views.Single(v => v.Screen == PizzaTime.Core.PointOfSaleMachinev2.Screen.SignIn).IsActive = true;
     }
 
     public void KeyboardClack()
     {
-        foreach (var group in canvasGroups)
-        {
-            group.interactable = false;
+        foreach (var view in views)
+        {            
+            view.CanvasGroup.interactable = false;
         }
     }
 }
